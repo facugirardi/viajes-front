@@ -1,0 +1,7 @@
+{
+  "/dashboard/page": "app/dashboard/page.js",
+  "/messages/page": "app/messages/page.js",
+  "/not-found": "app/not-found.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
+  "/login/page": "app/login/page.js"
+}

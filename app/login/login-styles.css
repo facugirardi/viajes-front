@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Alexandria:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.imgLogo_login{
+    width: 90px;
+    margin-bottom: 20px;
+}
+
+.google-logo{
+    width: 18px;
+    margin-right: 10px;
+}
+
+.wrapper {
+    font-family: 'Noto Sans', sans-serif;
+    width: 20%;
+    margin-top: 12%;
+    border: 1px solid #ddd5cbbe !important ;
+    background-color: white;
+    color: black;
+    padding: 30px 33px 10px 33px;
+    display: flex;
+    flex-direction: column; /* Colocar elementos en columna */
+    justify-content: space-between; /* Distribuir espacio uniformemente */
+    height: 100%; /* Ocupar toda la altura del contenedor padre */
+}
+
+.flex-item-logo{
+    flex: 1; /* Cada elemento toma un espacio igual */  
+    display: flex;
+    justify-content: center;  /* Centra el contenido horizontalmente */
+    align-items: center;      /* Centra el contenido verticalmente */
+    flex-direction: column;   /* Alinea el contenido en columna */
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.wrapper h3 {
+    font-weight: 300;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.wrapper .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin-top: 5%;
+    margin-bottom: 20%;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+    border: 1px solid #D9C7B3 !important ;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Noto Sans', sans-serif;
+    border: 1px solid rgb(160, 160, 160);
+    margin-top: 7px;
+}
+
+.input-box input::placeholder{
+    color: rgba(100, 100, 100, 0.629);
+    font-size: 12.5px;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.input-box .icon{
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    transform: translateY(-30%);
+    font-size: 16px;
+}
+
+.wrapper .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    font-family: 'Noto Sans', sans-serif;
+    margin-bottom: 5%;
+    margin-top: 17%;
+    color: rgb(83, 83, 83);
+
+}
+
+.remember-forgot label{
+    display: flex;
+}
+
+.remember-forgot label input {
+    margin-right: 4px;
+    height: 80%;
+    width: 80%;
+}
+
+.label_input{
+    font-size: 13.5px !important; 
+    font-family: 'Noto Sans', sans-serif;
+    color: #000000;
+}
+
+.remember-forgot a {
+    color: rgb(83, 83, 83);
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.wrapper button {
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    height: 45px;
+    background-color: #e4e4e4;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: rgb(0, 0, 0) !important; 
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px !important;
+}
+
+.wrapper button:hover {
+    background-color: #d4d4d4 !important;
+    transition: .2s ease;
+}
+
+.google-button{
+    margin-top: 20px;
+    background-color: #e4e4e4 !important;
+    color: rgb(0, 0, 0) !important; 
+    display: flex;
+    justify-content: center;  /* Centra el contenido horizontalmente */
+    align-items: center;      /* Centra el contenido verticalmente */
+    flex-direction: row;   /* Alinea el contenido en columna */
+    font-size: 14px !important;
+}
+
+.google-button:hover{
+    background-color: #d4d4d4 !important;
+    transition: .2s ease;
+}
+
+.google-button .iconGoogle {
+    position: center;
+    right: 10px;
+    top: 15px;
+    transform: translateY(-45%);
+}
+
+.wrapper .register-link {
+    font-size: 14,5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.register-link p {
+    font-family: 'Noto Sans', sans-serif;
+    color: #7a7a7a;
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+
+.register-link p a {
+    color: #2A50CF;
+    font-family: 'Noto Sans', sans-serif;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-link p a:hover {          
+    text-decoration: underline;
+}
+
+
+.password-container {
+    height: 55px;
+    position: relative;
+}
+
+
+.password-toggle {
+    margin-top: 8px;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+@media (max-width: 1200px) {
+    .wrapper {
+        width: 45%;
+      }
+}
+
+@media (max-width: 991px) {
+    .wrapper {
+        width: 60%;
+        margin-top: 30%;    
+      }
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        width: 75%;
+        margin-top: 50%;    
+
+      }
+}
+
+@media (max-width: 450px) {
+    .wrapper {
+        width: 80%;
+      }
+}
+@media (max-width: 415px) {
+    .wrapper {
+        width: 85%;
+      }
+
+    .wrapper .input-box {
+        margin-top: 7.5%;
+        margin-bottom: 20%;
+    }
+}
+
+@media (max-width: 360px) {
+    .wrapper {
+        width: 100%;
+      }
+
+    .wrapper .input-box {
+        margin-top: 7.5%;
+        margin-bottom: 20%;
+    }
+}

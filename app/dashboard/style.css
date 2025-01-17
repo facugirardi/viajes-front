@@ -1,0 +1,72 @@
+body{
+    overflow-x: hidden;
+}
+
+.textl:hover{
+    color: #215eb4;
+}
+
+.textl{
+    color: #737578;
+    margin-top: 7px;
+    font-size: 13px;
+    margin-left: 20px;
+}
+
+.hometext{
+    margin-top: 5px;
+}
+.btn-logout{
+    background-color: #11315E;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.logodashboard{
+    width: 50px;
+    height: 50px;
+    margin-left: 100px;
+    margin-top: 25px;
+}
+
+.textl.active-link {
+    background-color: #11315E;
+    color: white !important;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-right: 20px;
+  }
+
+  .textp{
+    color: #737578;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 11px;
+    margin-left: 35px;
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    width: 100vw; /* Opcional para asegurar ancho completo */
+    background-color: #f8f9fa; /* Fondo claro para el loader */
+    position: fixed; /* Fija el loader en la pantalla */
+    top: 0;
+    left: 0;
+    z-index: 1050; /* Asegura que esté sobre otros elementos */
+  }
+  
+  .loader {
+    color: #007bff; /* Color del spinner */
+    font-size: 1rem;
+  }
+  
