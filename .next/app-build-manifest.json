@@ -1,9 +1,10 @@
 {
   "pages": {
-    "/not-found": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,17 +12,28 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/dashboard/page": [
+    "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/dashboard/page.css",
-      "static/chunks/app/dashboard/page.js"
+      "static/chunks/app/not-found.js"
     ],
-    "/messages/page": [
+    "/destinos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/messages/page.css",
-      "static/chunks/app/messages/page.js"
+      "static/css/app/destinos/page.css",
+      "static/chunks/app/destinos/page.js"
+    ],
+    "/nosotros/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/nosotros/page.css",
+      "static/chunks/app/nosotros/page.js"
+    ],
+    "/contacto/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/contacto/page.css",
+      "static/chunks/app/contacto/page.js"
     ],
     "/login/page": [
       "static/chunks/webpack.js",
