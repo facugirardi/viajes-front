@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { toast } from "react-toastify";
 import Footer from "@/layouts/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,7 +9,7 @@ import "@/public/assets/vendor/boxicons/css/boxicons.min.css";
 import "@/public/assets/vendor/glightbox/css/glightbox.min.css";
 import "@/public/assets/vendor/remixicon/remixicon.css";
 import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
-
+import debounce from "lodash.debounce";
 import Swiper, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -18,7 +18,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Isotope from "isotope-layout";
 import "@/public/assets/js/main.js";
 import '../globals2.css'
+import './contact.css'
 import axios from 'axios';
+import Select from "react-select";
 
 const page = () => {
   const [activeTab, setActiveTab] = useState("viajes");
@@ -29,7 +31,195 @@ const page = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [airports, setAirports] = useState([]); // Lista de aeropuertos
+  const [suggestionsOrigen, setSuggestionsOrigen] = useState([]); // Sugerencias para origen
+  const [suggestionsDestino, setSuggestionsDestino] = useState([]); // Sugerencias para destino
+  const [activeField, setActiveField] = useState(""); // Control de qué campo está activo
+  const [cities, setCities] = useState([]); // Lista de ciudades
+  const [suggestionsCityOrigen, setSuggestionsCityOrigen] = useState([]); // Sugerencias para origen (ciudades)
+  const [suggestionsCityDestino, setSuggestionsCityDestino] = useState([]); // Sugerencias para destino (ciudades)
+  
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get("https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json");
+        setCities(response.data); // Guardamos todas las ciudades en estado
+      } catch (error) {
+        console.error("Error al cargar ciudades", error);
+      }
+    };
+    
+    // Cargar lista de aeropuertos desde la API
+    const fetchAirports = async () => {
+      try {
+        const response = await axios.get(
+          "https://raw.githubusercontent.com/mwgg/Airports/master/airports.json"
+        );
+        const airportsData = Object.values(response.data)
+          .filter(airport => airport.iata) // Solo con código IATA
+          .map(airport => ({
+            value: airport.iata,
+            label: `${airport.iata} - ${airport.name}, ${airport.city}, ${airport.country}`
+          }));
+        setAirports(airportsData);
+      } catch (error) {
+        console.error("Error al obtener aeropuertos", error);
+      }
+    };
+    fetchCities();
+    fetchAirports();
+  }, []);
+  // Función para manejar la selección de aeropuerto
+  const handleSelect = (selectedValue, field) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: selectedValue,
+    }));
+    setActiveField(""); // Cerrar las sugerencias al seleccionar
+  };
+  const cityList = useMemo(() => cities.map(city => ({
+    name: city.name,
+    country: city.country
+  })), [cities]);
+  
+  const airportList = useMemo(() => airports, [airports]);
+  
+  const debouncedAirportSearch = useCallback(debounce((input, field, setSuggestions) => {
+    if (!input.trim()) {
+      setSuggestions([]);
+      return;
+    }
+  
+    const inputLower = input.toLowerCase();
+    const filteredAirports = airportList
+      .filter(airport =>
+        airport.label.toLowerCase().includes(inputLower)
+      )
+      .slice(0, 8); // Limita a 8 resultados
+  
+    setSuggestions(filteredAirports);
+  }, 200), [airportList]);
+  
+  const debouncedSearch = useCallback(debounce((input, field, setSuggestions) => {
+    if (!input.trim()) {
+      setSuggestions([]);
+      return;
+    }
+  
+    const inputLower = input.toLowerCase();
+    const filteredCities = cityList
+      .filter(city =>
+        city.name.toLowerCase().includes(inputLower) ||
+        city.country.toLowerCase().includes(inputLower)
+      )
+      .slice(0, 8); // Limita a 8 resultados
+  
+    setSuggestions(filteredCities);
+  }, 200), [cityList]); // Dependencia solo de la lista de ciudades
+  
+  
+  
+  const getCitySuggestions = (value) => {
+    if (!value) return [];
+    const inputValue = value.trim().toLowerCase();
+  
+    return cities
+      .filter(city =>
+        city.name.toLowerCase().includes(inputValue) ||
+        city.country.toLowerCase().includes(inputValue)
+      )
+      .slice(0, 5); // Limitar a 8 sugerencias
+  };
+  const handleCityInputChange = (event, field) => {
+    const value = event.target.value;
+    setFormData(prev => ({ ...prev, [field]: value }));
+  
+    requestAnimationFrame(() => {
+      if (field === "ciudadOrigen") {
+        debouncedSearch(value, field, setSuggestionsCityOrigen);
+      } else {
+        debouncedSearch(value, field, setSuggestionsCityDestino);
+      }
+    });
+  };
+    
+  const airportOptions = airports.map(airport => ({
+    value: airport.iata,
+    label: `${airport.iata} ${airport.name} - ${airport.city}, ${airport.country}`
+  }));
+  
+// Función para obtener sugerencias de aeropuertos
+const getSuggestions = (value) => {
+  if (!value) return []; // Si no hay valor, devolver array vacío
+  const inputValue = value.trim().toLowerCase(); // Asegurar que siempre haya un string válido
 
+  return airports
+    .filter(
+      airport =>
+        airport.name.toLowerCase().includes(inputValue) ||
+        airport.city.toLowerCase().includes(inputValue) ||
+        airport.iata.toLowerCase().includes(inputValue)
+    )
+    .slice(0, 8); // Limitar a 8 sugerencias
+};
+// Función para manejar la selección de aeropuerto
+const handleSelectChange = (selectedOption, field) => {
+  setFormData(prev => ({
+    ...prev,
+    [field]: selectedOption ? selectedOption.label : ""
+  }));
+};
+
+const onChangeOrigen = (_, { newValue }) => {
+  setFormData((prev) => ({
+    ...prev,
+    origen: newValue,
+  }));
+};
+
+const onChangeDestino = (_, { newValue }) => {
+  setFormData((prev) => ({
+    ...prev,
+    destino: newValue,
+  }));
+};
+
+  // Renderizar cada sugerencia
+  const renderSuggestion = (suggestion) => (
+    <div>
+      {suggestion.iata} - {suggestion.city}, {suggestion.country}
+    </div>
+  );
+  // Configuración de Autosuggest para "Origen" y "Destino"
+  const inputPropsOrigen = {
+    placeholder: "Ingrese el origen",
+    value: formData.origen || "", // Asegurar que no sea undefined
+    onChange: onChangeOrigen,
+    className: "form-control cmpo",
+  };
+  
+  const inputPropsDestino = {
+    placeholder: "Ingrese el destino",
+    value: formData.destino || "", // Asegurar que no sea undefined
+    onChange: onChangeDestino,
+    className: "form-control cmpo",
+  };
+
+  const handleAirportInputChange = (event, field) => {
+    const value = event.target.value;
+    setFormData(prev => ({ ...prev, [field]: value }));
+  
+    requestAnimationFrame(() => {
+      if (field === "origen") {
+        debouncedAirportSearch(value, field, setSuggestionsOrigen);
+        setActiveField("origen");  // 🔥 Se activa el campo de origen
+      } else {
+        debouncedAirportSearch(value, field, setSuggestionsDestino);
+        setActiveField("destino"); // 🔥 Se activa el campo de destino
+      }
+    });
+  };
+    
   // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -121,17 +311,37 @@ const page = () => {
             </div>
             <div className="row mb-3">
               <div className="col-md-4">
-                <label htmlFor="destino" className="form-label">
+              <label htmlFor="destino" className="form-label">
                   Destino
                 </label>
-                <input
+              <div className="autocomplete-container">
+              <input
+                className="autocomplete-input form-control cmpo"
+                type="text"
+                id="destino"
+                value={formData.destino || ""}
+                onChange={(e) => handleCityInputChange(e, "destino")}
+                placeholder="Ingrese el destino..."
+                onBlur={() => setTimeout(() => setSuggestionsCityDestino([]), 200)}
+              />
+              {suggestionsCityDestino.length > 0 && (
+                <ul className="autocomplete-suggestions" onMouseDown={(e) => e.preventDefault()}>
+                  {suggestionsCityDestino.map((city, index) => (
+                    <li key={index} className="autocomplete-suggestion" onClick={() => handleSelect(city.name, "destino")}>
+                      {city.name}, {city.country}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              </div>
+                {/* <input
                   type="text"
                   className="form-control cmpo"
                   id="destino"
                   value={formData.destino || ""}
                   onChange={handleChange}
                   placeholder="Ingrese el destino"
-                />
+                /> */}
               </div>
               <div className="col-md-4">
                 <label htmlFor="personas" className="form-label">
@@ -229,27 +439,78 @@ const page = () => {
                   <label htmlFor="origen" className="form-label">
                     Origen
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control cmpo"
                     id="origen"
                     onChange={handleChange}
                     value={formData.origen || ""}
                     placeholder="Ingrese el origen"
-                  />
+                  /> */}
+                  <div className="autocomplete-container">
+                    <input
+                      className="autocomplete-input form-control cmpo"
+                      type="text"
+                      id="origen"
+                      value={formData.origen}
+                      onChange={(e) => handleAirportInputChange(e, "origen")}
+                      placeholder="Ingrese el origen..."
+                      onFocus={() => setActiveField("origen")}
+                      onBlur={() => setTimeout(() => setActiveField(""), 1)} 
+                    />
+                    {activeField === "origen" && suggestionsOrigen.length > 0 && (
+                        <ul
+                        className="autocomplete-suggestions"
+                        onMouseDown={(e) => e.preventDefault()} 
+                      >
+                      {suggestionsOrigen.map((airport, index) => (
+                          <li key={index} className="autocomplete-suggestion" onClick={() => handleSelect(airport.label, "origen")}>
+                            {airport.label}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                </div>
+
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="destino" className="form-label">
                     Destino
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control cmpo"
                     id="destino"
                     onChange={handleChange}
                     value={formData.destino || ""}
                     placeholder="Ingrese el destino"
-                  />
+                  /> */}
+                  <div className="autocomplete-container">
+                    <input
+                      className="autocomplete-input form-control cmpo"
+                      type="text"
+                      id="destino"
+                      value={formData.destino}
+                      onChange={(e) => handleAirportInputChange(e, "destino")}
+                      placeholder="Ingrese el destino..."
+                      onFocus={() => setActiveField("destino")}
+                      onBlur={() => setTimeout(() => setActiveField(""), 1)} 
+                    />
+                    {/* Lista de sugerencias */}
+                    {activeField === "destino" && suggestionsDestino.length > 0 && (
+                        <ul
+                        className="autocomplete-suggestions"
+                        onMouseDown={(e) => e.preventDefault()} 
+                      >
+                        {suggestionsDestino.map((airport, index) => (
+                          <li key={index} className="autocomplete-suggestion" onClick={() => handleSelect(airport.label, "destino")}>
+                            {airport.label}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                </div>
+
                 </div>
               </div>
               <div className="row mb-3">
@@ -337,14 +598,26 @@ const page = () => {
                   <label htmlFor="destino" className="form-label">
                     Destino
                   </label>
+                  <div className="autocomplete-container">
                   <input
+                    className="autocomplete-input form-control cmpo"
                     type="text"
-                    className="form-control cmpo"
-                    onChange={handleChange}
                     id="destino"
                     value={formData.destino || ""}
-                    placeholder="Ingrese el destino"
+                    onChange={(e) => handleCityInputChange(e, "destino")}
+                    placeholder="Ingrese el destino..."
+                    onBlur={() => setTimeout(() => setSuggestionsCityDestino([]), 200)}
                   />
+                  {suggestionsCityDestino.length > 0 && (
+                    <ul className="autocomplete-suggestions" onMouseDown={(e) => e.preventDefault()}>
+                      {suggestionsCityDestino.map((city, index) => (
+                        <li key={index} className="autocomplete-suggestion" onClick={() => handleSelect(city.name, "destino")}>
+                          {city.name}, {city.country}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="tipoAlojamiento" className="form-label">
@@ -442,14 +715,26 @@ const page = () => {
                   <label htmlFor="destino" className="form-label">
                     Destino
                   </label>
-                  <input
-                    type="text"
-                    className="form-control cmpo"
-                    id="destino"
-                    value={formData.destino || ""}
-                    onChange={handleChange}
-                    placeholder="Ingrese el destino"
-                  />
+                  <div className="autocomplete-container">
+                    <input
+                      className="autocomplete-input form-control cmpo"
+                      type="text"
+                      id="destino"
+                      value={formData.destino || ""}
+                      onChange={(e) => handleCityInputChange(e, "destino")}
+                      placeholder="Ingrese el destino..."
+                      onBlur={() => setTimeout(() => setSuggestionsCityDestino([]), 200)}
+                    />
+                    {suggestionsCityDestino.length > 0 && (
+                      <ul className="autocomplete-suggestions" onMouseDown={(e) => e.preventDefault()}>
+                        {suggestionsCityDestino.map((city, index) => (
+                          <li key={index} className="autocomplete-suggestion" onClick={() => handleSelect(city.name, "destino")}>
+                            {city.name}, {city.country}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    </div>
                 </div>
                 <div className="col-md-4">
                   <label htmlFor="personas" className="form-label">
@@ -501,6 +786,12 @@ const page = () => {
         return null;
     }
   };
+  const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
+
+  const toggleNav = () => {
+    console.log('gs')
+    setIsNavOpen(!isNavOpen);
+  };
 
   return (
     <>
@@ -512,18 +803,20 @@ const page = () => {
             {/* <h1 className="logo"><a href="/">LOGO</a></h1> */}
             <a href="/" className="logo"><img src="assets/images/logo.png" alt="" className="img-fluid"/></a>
             </div>
-            <nav id="navbar" className="navbar col-lg-4 col-md-4 justify-content-end ">
-              <ul>
+            <nav id="navbar" className={`navbar col-lg-4 col-md-4 justify-content-end ${isNavOpen ? "open" : ""}`}>
+              <ul className={`nav-menu ${isNavOpen ? "active" : ""}`}>
                   <li><a className="nav-link scrollto" href="/">INICIO</a></li>
                   <div className="vertical-line" style={{ height: "25px" }}></div>
-                  <li><a className="nav-link scrollto " href="/destinos">DESTINOS</a></li>
+                  <li><a className="nav-link scrollto" href="/destinos">DESTINOS</a></li>
                   <div className="vertical-line" style={{ height: "25px" }}></div>
-                  <li><a className="nav-link scrollto" href="/">SERVICIOS</a></li>
+                  <li><a className="nav-link scrollto" href="#services">SERVICIOS</a></li>
                   <div className="vertical-line" style={{ height: "25px" }}></div>
                   <li><a className="nav-link scrollto" href="/nosotros">NOSOTROS</a></li>  
                   <li><a className="nav-link scrollto contact-li" href="/contacto">CONTACTO</a></li>  
               </ul>
-              <i className="bi bi-list mobile-nav-toggle"></i>
+              <button className="mobile-nav-toggle" onClick={toggleNav}>
+                <i className={`bi ${isNavOpen ? "bi-x" : "bi-list"}`}></i>
+              </button>
             </nav>
             <div className="col-lg-4 col-md-4 d-flex justify-content-end cont-li" >
               <a className="contact-button nav-link scrollto" href="/contacto">CONTACTO</a>

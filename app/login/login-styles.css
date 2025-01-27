@@ -209,6 +209,11 @@ body{
     cursor: pointer;
 }
 
+@media (max-width: 1800px) {
+    .wrapper {
+        width: 25%;
+      }
+}
 
 @media (max-width: 1200px) {
     .wrapper {

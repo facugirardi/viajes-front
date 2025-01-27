@@ -19,6 +19,65 @@
   border-radius: 20px;
   border: 3.5px solid rgb(255, 255, 255);
 }
+.mobile-nav-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #333;
+  cursor: pointer;
+  display: none;
+}
+
+
+.deslizapng{
+  width: 35px !important;
+  height: 35px !important;
+}
+
+/* Muestra el botón solo en móviles */
+@media screen and (max-width: 991px) {
+
+
+/* Oculta el menú en móviles por defecto */
+.nav-menu {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: white;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  z-index: 1000;
+}
+
+/* Muestra el menú cuando está activo */
+.nav-menu.active {
+  display: flex;
+}
+
+/* Estilos para el botón de hamburguesa */
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+  .nav-menu {
+    display: none; /* Oculto por defecto */
+  }
+  .nav-menu.active {
+    display: flex; /* Se muestra cuando el estado cambia */
+  }
+}
+
+
 .input-nl{
   border: 1px solid gray !important;
 }

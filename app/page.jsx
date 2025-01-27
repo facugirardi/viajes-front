@@ -21,6 +21,13 @@ import "@/public/assets/js/main.js";
 import './globals2.css'
 
 const page = () => {
+  const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
+
+  const toggleNav = () => {
+    console.log('gs')
+    setIsNavOpen(!isNavOpen);
+  };
+
   return (
     <>
       <hr className="top-line" />
@@ -31,18 +38,20 @@ const page = () => {
             {/* <h1 className="logo"><a href="/">LOGO</a></h1> */}
             <a href="/" className="logo"><img src="assets/images/logo.png" alt="" className="img-fluid"/></a>
             </div>
-            <nav id="navbar" className="navbar col-lg-4 col-md-4 justify-content-end ">
-              <ul>
+            <nav id="navbar" className={`navbar col-lg-4 col-md-4 justify-content-end ${isNavOpen ? "open" : ""}`}>
+              <ul className={`nav-menu ${isNavOpen ? "active" : ""}`}>
                   <li><a className="nav-link scrollto active" href="/">INICIO</a></li>
                   <div className="vertical-line" style={{ height: "25px" }}></div>
                   <li><a className="nav-link scrollto" href="/destinos">DESTINOS</a></li>
                   <div className="vertical-line" style={{ height: "25px" }}></div>
                   <li><a className="nav-link scrollto" href="#services">SERVICIOS</a></li>
                   <div className="vertical-line" style={{ height: "25px" }}></div>
-                  <li><a className="nav-link scrollto " href="/nosotros">NOSOTROS</a></li>  
+                  <li><a className="nav-link scrollto" href="/nosotros">NOSOTROS</a></li>  
                   <li><a className="nav-link scrollto contact-li" href="/contacto">CONTACTO</a></li>  
               </ul>
-              <i className="bi bi-list mobile-nav-toggle"></i>
+              <button className="mobile-nav-toggle" onClick={toggleNav}>
+                <i className={`bi ${isNavOpen ? "bi-x" : "bi-list"}`}></i>
+              </button>
             </nav>
             <div className="col-lg-4 col-md-4 d-flex justify-content-end cont-li" >
               <a className="contact-button nav-link scrollto" href="/contacto">CONTACTO</a>
@@ -54,8 +63,8 @@ const page = () => {
         <div className="hero-container">
           <h1 className="title-hero">ENCUENTRA TU<br/>PRÓXIMA <span className="title2-hero">AVENTURA</span></h1>
           <div className="deslizadiv">
-            <p className="p-desliza">Desliza</p>
-
+          <img src="assets/image.png" className="deslizapng" alt="" />
+          <p className="p-desliza">Desliza</p>
           </div>
         </div>
       </section>

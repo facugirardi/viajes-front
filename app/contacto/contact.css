@@ -1,0 +1,45 @@
+.autocomplete-container {
+    position: relative; /* IMPORTANTE: Asegura que el `ul` se posicione relativo a este contenedor */
+    width: 100%;
+  }
+  
+  .autocomplete-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 10px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+  }
+  
+  .autocomplete-suggestions {
+    position: absolute; /* 📌 Asegura que el dropdown esté en relación con el input */
+    top: 100%; /* 📌 Coloca la lista justo debajo del input */
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1000; /* Asegura que las sugerencias estén encima de otros elementos */
+    max-height: 200px; /* Evita que la lista crezca demasiado */
+    overflow-y: auto;
+  }
+  
+  .autocomplete-suggestion {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .autocomplete-suggestion:hover {
+    background-color: #f0f0f0;
+  }
+  
