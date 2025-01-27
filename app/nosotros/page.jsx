@@ -100,6 +100,9 @@ const page = () => {
 
         </div>
       </section>
+      <a href="https://wa.me/5493513934673" target="_blank" class="whatsapp-float">
+        <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" class="whatsapp-icon" />
+      </a>
       <div className="margin-destinos"></div>
     </main>
 

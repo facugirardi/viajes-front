@@ -27,7 +27,95 @@
   cursor: pointer;
   display: none;
 }
+@media (min-width: 1200px) {
 
+.container-destinos{
+  max-width: 422px !important;
+  min-width: 422px !important;
+  min-height: 245px !important;
+  max-height: 245px !important;
+}
+}
+
+@media (max-width: 363px) {
+  .container-destinos{
+    max-width: 323px !important;
+    min-width: 323px !important;
+    min-height: 187px !important;
+    max-height: 187px !important;
+  }
+}
+
+@media (min-width: 410px) and (max-width: 431px){
+  .container-destinos{
+    margin-left: 32px !important
+  }
+}
+
+@media (min-width: 390px) and (max-width: 409px){
+  .container-destinos{
+    margin-left: 12px !important
+  }
+}
+
+@media (min-width: 364px) and (max-width: 449px){
+  .container-destinos{
+    
+    max-width: 346px !important;
+    min-width: 346px !important;
+    min-height: 200px !important;
+    max-height: 200px !important;
+  }
+}
+
+@media (min-width: 450px) and (max-width: 479px){
+  .container-destinos{
+    max-width: 428px !important;
+    min-width: 428px !important;
+    min-height: 248px !important;
+    max-height: 248px !important;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 576px){
+  .container-destinos{
+    max-width: 503px !important;
+    min-width: 503px !important;
+    min-height: 291px !important;
+    max-height: 291px !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+  .container-destinos{
+    max-width: 540px !important;
+    min-width: 540px !important;
+    min-height: 313px !important;
+    max-height: 313px !important;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 990px){
+  .container-destinos{
+    max-width: 230px !important;
+    min-width: 230px !important;
+    min-height: 133px !important;
+    max-height: 133px !important;
+  }
+}
+
+
+@media (min-width: 991px) and (max-width: 1199px)
+ {
+  .container-destinos{
+    max-width: 307px !important;
+    min-width: 307px !important;
+    min-height: 178px !important;
+    max-height: 178px !important;
+  }
+}
+  
 
 .deslizapng{
   width: 35px !important;
@@ -353,6 +441,35 @@ a:hover {
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+.whatsapp-icon {
+  width: 35px;
+  height: 35px;
+}
+
+
 .back-to-top {
   position: fixed;
   visibility: hidden;
