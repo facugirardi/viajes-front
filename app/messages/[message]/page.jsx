@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Button  } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
-import "../globals2.css";
+import "../../globals2.css";
 import "./style.css";
 import { House, ChatText, Airplane, SignOut } from "phosphor-react";
 import { usePathname } from "next/navigation"; // Importar usePathname
@@ -60,7 +60,7 @@ const Page = () => {
         {/* Sidebar */}
         <div className={`sidebar ${isSidebarOpen ? "active" : ""}`}>
           <Nav defaultActiveKey="/" className="flex-column">
-          <a href="/" className="logo"><img src="assets/images/logo.png" alt="" className="img-fluid logodashboard"/></a>
+          <a href="/" className="logo"><img src="../assets/images/logo.png" alt="" className="img-fluid logodashboard"/></a>
           <hr style={{
             border: "none",
             borderTop: "1px solid rgb(184, 187, 191)",
@@ -80,7 +80,7 @@ const Page = () => {
             </Nav.Link>
             <Nav.Link
               href="/messages"
-              className={`textl ${pathname === "/messages" ? "active-link" : ""}`}
+              className="textl active-link"
             >
               <ChatText size={20} weight="bold" className="me-2" /> Mensajes
             </Nav.Link>
@@ -111,7 +111,7 @@ const Page = () => {
               <Row className="mtrow d-flex justify-content-center">
                 {messages.map((msg, index) => (
                   <Col md={5} key={index} className="col-message">
-                    <Button variant="primary" className={`btnv w-100 mb-2 d-flex justify-content-between align-items-center ${msg.leido ? "leido" : ""}`}>
+                    <Button variant="primary" className="btnv w-100 mb-2 d-flex justify-content-between align-items-center">
                       <span>{msg.category}</span>
                       <span>Ver más</span>
                     </Button>
@@ -159,15 +159,10 @@ const Page = () => {
           border-bottom: 1px solid #dee2e6;
         }
         @media (max-width: 991px) {
-          body {
-            overflow-x: hidden !important; /* Evita el scroll lateral en móviles */
-          }
-
           .sidebar {
             transform: translateX(-100%);
           }
           .sidebar.active {
-      
             transform: translateX(0);
           }
           .main-content {

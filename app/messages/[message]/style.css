@@ -109,12 +109,3 @@
     font-size: 1rem;
   }
   
-.leido{
-    background-color: #ffffff00 !important;
-    color: #11315E !important;
-    border: 1px solid #11315E !important;
-}
-
-.leido:hover{
-    background-color: #9e9e9e2b !important;
-}

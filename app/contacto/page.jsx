@@ -300,17 +300,46 @@ const onChangeDestino = (_, { newValue }) => {
     setError("");
 
     console.log("Form data:", formData); // Verifica los datos aquí
+
+    const categoryMap = {
+      viajes: "Viajes",
+      aereos: "Aéreo",
+      alojamiento: "Alojamiento",
+      paquetes: "Paquetes"
+    };
+    const fieldLabels = {
+      name: "Nombre",
+      email: "Email",
+      origen: "Origen",
+      destino: "Destino",
+      partida: "Fecha de Partida",
+      regreso: "Fecha de Regreso",
+      asistencia: "Asistencia al viajero",
+      tipoAlojamiento: "Tipo de Alojamiento",
+      ingreso: "Fecha de Ingreso",
+      salida: "Fecha de Salida",
+      mensajeAdicional: "Mensaje Adicional"
+    };
   
-    const message = [
-      `Pasajeros:\n- Adultos: ${adultos}\n- Niños (0-11 años): ${niños}\n- Mayores (+65 años): ${mayores}\n- Personas con discapacidad: ${discapacidad}`,
-      ...Object.entries(formData)
-        .filter(([key]) => key !== "name" && key !== "email")
-        .map(([key, value]) => `${key}: ${value}`)
-    ].join("\n");
+    const message = `Categoría: ${categoryMap[activeTab]}
+
+      Pasajeros:
+        - Adultos: ${adultos}
+        - Niños (0-11 años): ${niños}
+        - Mayores (+65 años): ${mayores}
+        - Personas con discapacidad: ${discapacidad}
+        
+      Detalles:
+        ${Object.entries(formData)
+          .filter(([key]) => key !== "name" && key !== "email")
+          .map(([key, value]) => `  - ${fieldLabels[key] || key}: ${value}`)
+          .join("\n")}`;
+        
       
     const dataToSend = {
       name: formData.name,
       email: formData.email,
+      category: categoryMap[activeTab],
       message,
     };
   
@@ -364,7 +393,7 @@ const onChangeDestino = (_, { newValue }) => {
                   Email o Teléfono
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control cmpo"
                   id="email"
                   value={formData.email}
