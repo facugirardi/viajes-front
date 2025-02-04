@@ -32,6 +32,18 @@
     margin-top: 25px;
 }
 
+.alertme{
+    margin-top: 20% !important;
+    width: 70%;
+    margin-left: auto;
+    font-size: 14px;
+    margin-right: auto;
+}
+
+.dashboard{
+    background-color: #13325D;
+    height: 50px !important;
+}
 .textl.active-link {
     background-color: #11315E;
     color: white !important;
@@ -39,6 +51,37 @@
     padding: 8px 12px;
     margin-right: 20px;
   }
+
+.mtrow{
+    margin-top: 60px !important;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+.mensajes-title{
+    font-size: 15px;
+    
+}
+
+.dashboard-title{
+    margin-top: 50px;
+    margin-left: 9%;
+    font-size: 20px;
+    color: #696969;
+    font-weight: 400;
+}
+
+.btnv{
+    background-color: #11315E !important;
+    border: none;
+    margin-right: auto;
+    font-family: 'Poppins', sans-serif;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: auto;
+    height: 70px;
+}
 
   .loader-container {
     display: flex;

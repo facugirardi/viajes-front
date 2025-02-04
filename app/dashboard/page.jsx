@@ -88,7 +88,7 @@ const Page = () => {
         {/* Main Content */}
         <div className="main-content">
           {/* Topbar */}
-          <Navbar bg="light" className="navbar px-3">
+          <Navbar  className="navbar px-3">
             <button
               className="btn btn-outline-primary d-lg-none"
               onClick={toggleSidebar}

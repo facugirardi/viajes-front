@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Nav, Navbar, Spinner  } from "react-bootstrap";
+import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Button  } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
 import "../globals2.css";
@@ -12,19 +12,27 @@ const Page = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const pathname = usePathname(); // Obtener la URL actual
   const [loading, setLoading] = useState(true); // Estado para el loader
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      window.location.href = "/login"; // Redirección si no está logueado
+      window.location.href = "/login";
     }
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 400);
-
-    return () => clearTimeout(timer); // Limpiar el timer si el componente se desmonta
-
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/messages");
+        const data = await response.json();
+        setMessages(data);
+        console.log(messages)
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
+    fetchMessages();
+    setTimeout(() => setLoading(false), 400);
   }, []);
+
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -85,7 +93,7 @@ const Page = () => {
         {/* Main Content */}
         <div className="main-content">
           {/* Topbar */}
-          <Navbar bg="light" className="navbar px-3">
+          <Navbar className="navbar px-3">
             <button
               className="btn btn-outline-primary d-lg-none"
               onClick={toggleSidebar}
@@ -96,10 +104,21 @@ const Page = () => {
 
           {/* Page Content */}
           <Container fluid className="py-4">
-            <Row>
-              <Col className="text-center">
-              </Col>
-            </Row>
+            <h5 className="dashboard-title">Dashboard <span className="mensajes-title">&gt; Mensajes</span></h5>
+          {messages.length === 0 ? (
+              <Alert variant="warning" className="alertme text-center">No hay mensajes.</Alert>
+            ) : (
+              <Row className="mtrow d-flex justify-content-center">
+                {messages.map((msg, index) => (
+                  <Col md={5} key={index}>
+                    <Button variant={index >= 3 ? "outline-primary" : "primary"} className="btnv w-100 mb-2 d-flex justify-content-between align-items-center">
+                      <span>{msg.category}</span>
+                      <span>Ver más</span>
+                    </Button>
+                  </Col>
+                ))}
+              </Row>
+            )}
           </Container>
         </div>
       </div>

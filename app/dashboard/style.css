@@ -6,6 +6,11 @@ body{
     color: #215eb4;
 }
 
+.dashboard{
+    background-color: #13325D;
+    height: 50px !important;
+}
+
 .textl{
     color: #737578;
     margin-top: 7px;

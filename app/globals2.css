@@ -719,6 +719,11 @@ a:hover {
 }
 
 @media (max-width: 991px) {
+  .alertme{
+    width: 80% !important;
+    font-size: 10px !important;
+}
+
   .contact-li{
     opacity: 100%;
   }
