@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { toast } from "react-toastify";
 import Footer from "@/layouts/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,6 +22,65 @@ import './contact.css'
 import axios from 'axios';
 import Select from "react-select";
 
+const PassengerDropdown = ({ adultos, setAdultos, niños, setNiños, mayores, setMayores, discapacidad, setDiscapacidad }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const toggleMenu = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX, width: rect.width });
+    }
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <>
+      {/* Botón que mantiene el mismo estilo que el input */}
+      <button type="button" ref={buttonRef} onClick={toggleMenu} className="form-control cmpo text-left d-flex justify-content-between align-items-center">
+        {adultos + niños + mayores + discapacidad} pasajeros <span>▼</span>
+      </button>
+
+      {/* Dropdown flotante sobre la pantalla */}
+      {isMenuOpen && (
+        <div ref={dropdownRef} style={{ position: "absolute", top: dropdownPosition.top, left: dropdownPosition.left, width: dropdownPosition.width, zIndex: 1000 }} className="bg-white border rounded shadow p-3">
+
+          {[{ label: "Adultos", state: adultos, setState: setAdultos, min: 1 },
+            { label: "Niños (0-11 años)", state: niños, setState: setNiños, min: 0 },
+            { label: "Mayores (+65 años)", state: mayores, setState: setMayores, min: 0 },
+            { label: "Discapacidad", state: discapacidad, setState: setDiscapacidad, min: 0 }].map((group, index) => (
+            <div key={index} className="d-flex justify-content-between align-items-center mb-2">
+              <span className="labelpasajeros">{group.label}</span>
+              <div className="d-flex align-items-center">
+                <button type="button"  onClick={() => group.setState(Math.max(group.min, group.state - 1))} className="btn btn-sm btn-light">-</button>
+                <span className="px-3 px3labe">{group.state}</span>
+                <button type="button"  onClick={() => group.setState(group.state + 1)} className="btn btn-sm btn-light">+</button>
+              </div>
+            </div>
+          ))}
+
+          <div className="d-flex justify-content-center mt-3">
+            <button type="button"  onClick={() => setIsMenuOpen(false)} className="btn btn-primary">LISTO</button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
 const page = () => {
   const [activeTab, setActiveTab] = useState("viajes");
   const [formData, setFormData] = useState({
@@ -38,7 +97,11 @@ const page = () => {
   const [cities, setCities] = useState([]); // Lista de ciudades
   const [suggestionsCityOrigen, setSuggestionsCityOrigen] = useState([]); // Sugerencias para origen (ciudades)
   const [suggestionsCityDestino, setSuggestionsCityDestino] = useState([]); // Sugerencias para destino (ciudades)
-  
+  const [adultos, setAdultos] = useState(1);
+  const [niños, setNiños] = useState(0);
+  const [mayores, setMayores] = useState(0);
+  const [discapacidad, setDiscapacidad] = useState(0);
+
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -238,11 +301,13 @@ const onChangeDestino = (_, { newValue }) => {
 
     console.log("Form data:", formData); // Verifica los datos aquí
   
-    const message = Object.entries(formData)
-      .filter(([key]) => key !== "name" && key !== "email")
-      .map(([key, value]) => `${key}: ${value}`)
-      .join("\n");
-  
+    const message = [
+      `Pasajeros:\n- Adultos: ${adultos}\n- Niños (0-11 años): ${niños}\n- Mayores (+65 años): ${mayores}\n- Personas con discapacidad: ${discapacidad}`,
+      ...Object.entries(formData)
+        .filter(([key]) => key !== "name" && key !== "email")
+        .map(([key, value]) => `${key}: ${value}`)
+    ].join("\n");
+      
     const dataToSend = {
       name: formData.name,
       email: formData.email,
@@ -344,17 +409,10 @@ const onChangeDestino = (_, { newValue }) => {
                 /> */}
               </div>
               <div className="col-md-4">
-                <label htmlFor="personas" className="form-label">
-                  Cantidad de Personas
-                </label>
-                <input
-                  type="number"
-                  className="form-control cmpo"
-                  id="personas"
-                  value={formData.personas || ""}
-                  onChange={handleChange}
-                  placeholder="Ingrese la cantidad de personas"
-                />
+              <label htmlFor="personas" className="form-label">
+            Cantidad de Personas
+          </label>
+              <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
               </div>
               <div className="col-md-4">
                 <label htmlFor="tipoAlojamiento" className="form-label">
@@ -516,17 +574,10 @@ const onChangeDestino = (_, { newValue }) => {
               <div className="row mb-3">
                 <div className="col-md-4">
                   <label htmlFor="personas" className="form-label">
-                    Cantidad de Pasajeros
+                    Cantidad de Personas
                   </label>
-                  <input
-                    type="number"
-                    className="form-control cmpo"
-                    id="personas"
-                    onChange={handleChange}
-                    value={formData.personas || ""}
-                    placeholder="Ingresar cantidad"
-                  />
-                </div>
+                  <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
+                  </div>
                 <div className="col-md-4">
                   <label htmlFor="partida" className="form-label">
                     Partida
@@ -635,15 +686,8 @@ const onChangeDestino = (_, { newValue }) => {
                   <label htmlFor="personas" className="form-label">
                     Cantidad de Personas
                   </label>
-                  <input
-                    type="number"
-                    className="form-control cmpo"
-                    id="personas"
-                    value={formData.personas || ""}
-                    onChange={handleChange}
-                    placeholder="Ingresar cantidad"
-                  />
-                </div>
+                  <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
+                  </div>
                 <div className="col-md-4">
                   <label htmlFor="ingreso" className="form-label">
                     Ingreso
@@ -740,15 +784,8 @@ const onChangeDestino = (_, { newValue }) => {
                   <label htmlFor="personas" className="form-label">
                     Cantidad de Personas
                   </label>
-                  <input
-                    type="number"
-                    className="form-control cmpo"
-                    id="personas"
-                    onChange={handleChange}
-                    value={formData.personas || ""}
-                    placeholder="Ingrese la cantidad de personas"
-                  />
-                </div>
+                  <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
+                  </div>
                 <div className="col-md-4">
                   <label htmlFor="tipoAlojamiento" className="form-label">
                     Tipo de Alojamiento

@@ -13,6 +13,19 @@
     outline: none;
   }
   
+.labelpasajeros{
+  font-size: 14px;
+}
+
+.px3labe{
+  min-width: 30px !important;
+  text-align: center !important; 
+  display: inline-block !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  font-size: 14px !important;
+}
+
   .autocomplete-suggestions {
     position: absolute; /* 📌 Asegura que el dropdown esté en relación con el input */
     top: 100%; /* 📌 Coloca la lista justo debajo del input */

@@ -10,7 +10,7 @@ const Footer = () => {
               <div className="col-lg-4 col-md-4 footer-contact">
                 <p className="text-center">
                 <a href="/" className="logo"><img src="assets/images/logo.png" alt="" className="img-fluid"/></a><br /><br />
-                  CHACABUCO 147 <br />
+                  GALERIA VIA DE LA FONTANA - LOCAL 14 <br />
                   CÓRDOBA - ARGENTINA<br /><br />
                   (+54) 351-393-4673<br />
                   ADRIYORNET@GMAIL.COM<br />

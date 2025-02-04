@@ -71,21 +71,15 @@ const page = () => {
         <div className="container">
 
             <h3 className="title-nosotros">¿Quienes Somos?</h3>
-            <p className="p-nosotros">Fundada en 2005, Aventura sin Límites comenzó como un 
-              sueño familiar en Costa Rica, ofreciendo tours locales y rápidamente convirtiéndose en líder del turismo de aventura. 
-            Hoy, llevamos a los viajeros a las selvas más exuberantes, cimas montañosas y sitios culturales más vibrantes del mundo.</p>
+            <p className="p-nosotros">Fundada en 2001 en Córdoba, Argentina, Vaya Pasajes y Turismo comenzó con el sueño de crear experiencias de viaje únicas,  ofreciendo desde escapadas nacionales hasta aventuras internacionales. Hoy, somos referentes en turismo, conectando a nuestros clientes con destinos inolvidables alrededor del mundo.</p>
             <hr style={{width:'100%', textAlign: 'center', marginLeft: 'auto', marginRight:'auto', color:'#968778', borderWidth: '2px'}} />
 
             <h3 className="title-nosotros">Objetivos Alcanzados</h3>
-            <p className="p-nosotros">Hemos sido reconocidos por nuestra excelencia en turismo
-               sostenible, recibiendo el premio de Mejor Agencia de Turismo Sostenible en 2010.
-                En 2015, expandimos nuestras fronteras con una oficina en Perú, ofreciendo
-                 experiencias únicas en la región andina.</p>
+            <p className="p-nosotros">A lo largo de más de 20 años, Vaya Pasajes y Turismo ha logrado consolidar su presencia en el mercado local, ofrecer paquetes de viajes adaptados a las necesidades de nuestros clientes y construir relaciones duraderas con proveedores clave. Estos logros nos permiten brindar experiencias confiables y memorables a cada viajero.</p>
             <hr style={{width:'100%', textAlign: 'center', marginLeft: 'auto', marginRight:'auto', color:'#968778', borderWidth: '2px'}} />
 
             <h3 className="title-nosotros">Nuestras Proyecciones</h3>
-            <p className="p-nosotros">Nos apasiona seguir innovando. Próximamente, planeamos 
-            llevar nuestras aventuras a destinos emergentes en Asia y África. Con tecnologías 
+            <p className="p-nosotros">Nos apasiona seguir innovando. Con tecnologías 
             avanzadas y un fuerte compromiso social, nuestro objetivo es ofrecer experiencias 
             cada vez más enriquecedoras y sostenibles.</p>
             <hr style={{width:'100%', textAlign: 'center', marginLeft: 'auto', marginRight:'auto', color:'#968778', borderWidth: '2px'}} />
