@@ -110,7 +110,8 @@ const Page = () => {
             ) : (
               <Row className="mtrow d-flex justify-content-center">
                 {messages.map((msg, index) => (
-                  <Col md={5} key={index} className="col-message">
+                  <Col md={5} key={index} className="col-message"
+                  onClick={() => window.location.href = `http://localhost:3000/messages/${msg.id}`}>
                     <Button variant="primary" className={`btnv w-100 mb-2 d-flex justify-content-between align-items-center ${msg.leido ? "leido" : ""}`}>
                       <span>{msg.category}</span>
                       <span>Ver más</span>

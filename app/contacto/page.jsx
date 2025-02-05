@@ -321,19 +321,18 @@ const onChangeDestino = (_, { newValue }) => {
       mensajeAdicional: "Mensaje Adicional"
     };
   
-    const message = `Categoría: ${categoryMap[activeTab]}
-
-      Pasajeros:
-        - Adultos: ${adultos}
-        - Niños (0-11 años): ${niños}
-        - Mayores (+65 años): ${mayores}
-        - Personas con discapacidad: ${discapacidad}
+    const message = 
+    `Pasajeros:
+      - Adultos: ${adultos}
+      - Niños (0-11 años): ${niños}
+      - Mayores (+65 años): ${mayores}
+      - Personas con discapacidad: ${discapacidad}
         
-      Detalles:
-        ${Object.entries(formData)
-          .filter(([key]) => key !== "name" && key !== "email")
-          .map(([key, value]) => `  - ${fieldLabels[key] || key}: ${value}`)
-          .join("\n")}`;
+    Detalles:
+      ${Object.entries(formData)
+        .filter(([key]) => key !== "name" && key !== "email")
+        .map(([key, value]) => ` - ${fieldLabels[key] || key}: ${value}`)
+        .join("\n")}`;
         
       
     const dataToSend = {

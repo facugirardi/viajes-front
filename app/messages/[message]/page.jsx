@@ -7,33 +7,51 @@ import "../../globals2.css";
 import "./style.css";
 import { House, ChatText, Airplane, SignOut } from "phosphor-react";
 import { usePathname } from "next/navigation"; // Importar usePathname
+import axios from "axios";
 
 const Page = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const pathname = usePathname(); // Obtener la URL actual
   const [loading, setLoading] = useState(true); // Estado para el loader
-  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState([]);
 
+  const urlPath = window.location.pathname; // Obtiene la ruta completa (ej: /messages/8)
+  const messageId = urlPath.split("/").pop(); // Extrae el último segmento (ID)
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       window.location.href = "/login";
     }
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:5000/messages");
-        const data = await response.json();
-        setMessages(data);
-        console.log(messages)
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
-    fetchMessages();
-    setTimeout(() => setLoading(false), 400);
   }, []);
 
+  useEffect(() => {
+    const fetchMessage = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/messages/${messageId}`);
+        const data = await response.json();
+        setMessage(data); // Guardamos el mensaje en el estado
+      } catch (error) {
+        console.error("Error fetching message:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMessage();
+  }, [messageId]);
 
+  const handleMarkAsRead = async () => {
+    try {
+      const response = await axios.put(`http://127.0.0.1:5000/messages/${message?.id}/mark_as_read`);
+      
+      if (response.status === 200) {
+        setMessage((prev) => ({ ...prev, leido: true })); // Actualiza el estado local
+      }
+    } catch (error) {
+      console.error("Error al marcar como leído:", error);
+    }
+  };
+  
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -105,20 +123,60 @@ const Page = () => {
           {/* Page Content */}
           <Container fluid className="py-4">
             <h5 className="dashboard-title">Dashboard <span className="mensajes-title">&gt; Mensajes</span></h5>
-          {messages.length === 0 ? (
-              <Alert variant="warning" className="alertme text-center">No hay mensajes.</Alert>
-            ) : (
-              <Row className="mtrow d-flex justify-content-center">
-                {messages.map((msg, index) => (
-                  <Col md={5} key={index} className="col-message">
-                    <Button variant="primary" className="btnv w-100 mb-2 d-flex justify-content-between align-items-center">
-                      <span>{msg.category}</span>
-                      <span>Ver más</span>
-                    </Button>
-                  </Col>
-                ))}
-              </Row>
-            )}
+            <Row className="message-box">
+              <div className='col-md-12 '>
+                <h5 className="text-center title-c">Mensaje</h5>
+              </div>
+              <div className='col-12 col-mb-12 col-md-4'>
+                <label htmlFor="destino" className="form-label">
+                    Categoría
+                  </label>
+                <input
+                  className=" form-control cmpo"
+                  type="text"
+                  readOnly 
+                  value={message?.category || ""}
+                />
+              </div>
+              <div className='col-12 col-mb-12 col-md-4 '>
+                <label htmlFor="destino" className="form-label">
+                    Nombre Completo
+                  </label>
+                <input
+                  className=" form-control cmpo"
+                  type="text"
+                  readOnly
+                  value={message?.name || ""}
+                />
+              </div>
+              <div className='col-12 col-mb-12 col-md-4 '>
+                <label htmlFor="destino" className="form-label">
+                    Teléfono o Email
+                  </label>
+                <input
+                  className=" form-control cmpo"
+                  type="text"
+                  readOnly
+                  value={message?.email || ""}
+                />
+              </div>
+              <div className='col-12 col-mb-12 col-md-12 '>
+   
+                <textarea
+                  className="textarea-msg form-control cmpo"
+                  type="text"
+                  readOnly
+                  value={message?.message || ""}
+                />
+              </div>
+
+              <div className="col-12 d-flex justify-content-center ">
+                <button className="btn btn-primary btn-read" onClick={handleMarkAsRead} disabled={message?.leido}>
+                  {message?.leido ? "Leído" : "Marcar como leído"}
+                </button>
+              </div>
+
+            </Row>
           </Container>
         </div>
       </div>
