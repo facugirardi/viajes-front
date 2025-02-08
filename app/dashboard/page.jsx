@@ -163,7 +163,7 @@ const Page = () => {
         .sidebar {
           width: 250px;
           height: 100vh;
-          background-color: #f8f9fa;
+          background-color: #FFFFFF;
           border-right: 1px solid #dee2e6;
           position: fixed;
           top: 0;

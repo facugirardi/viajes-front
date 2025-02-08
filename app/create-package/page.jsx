@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Nav, Navbar, Spinner, Alert  } from "react-bootstrap";
+import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Card, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
 import "../globals2.css";
 import "./style.css";
 import { House, ChatText, Airplane, SignOut } from "phosphor-react";
 import { usePathname } from "next/navigation"; // Importar usePathname
+import { CalendarIcon, PlusIcon } from "lucide-react";
 
 const Page = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -14,6 +15,18 @@ const Page = () => {
   const [loading, setLoading] = useState(true); // Estado para el loader
   const [packages, setPackages] = useState([]); // Estado para los paquetes
   const [fetchError, setFetchError] = useState(false); // Estado para manejar errores de conexión
+  const [sections, setSections] = useState([{ title: "", description: "" }]);
+  const [destinationSections, setDestinationSections] = useState([
+    { title: "", description: "" },
+  ]);
+
+  const addSection = (type) => {
+    if (type === "package") {
+      setSections([...sections, { title: "", description: "" }]);
+    } else {
+      setDestinationSections([...destinationSections, { title: "", description: "" }]);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -121,34 +134,66 @@ const Page = () => {
 
           {/* Page Content */}
           <Container fluid className="py-4">
-            <Row>
-            <div className="col-md-5">
             <h5 className="dashboard-title">Dashboard <span className="mensajes-title">&gt; Paquetes</span></h5>
-            </div>
-            <div className="col-md-5">
-            </div>
-            <div className="col-md-2 d-flex justify-content-center">
-            <button className="text-center btn btn-primary btn-read" 
-            onClick={() => window.location.href = `http://localhost:3000/create-package`}
-            >Crear Paquete
-            </button>
-            </div>
-            </Row>
-            {/* Mostrar alerta si hubo un error de conexión */}
-            {fetchError && <Alert variant="warning" className="alertme text-center">Error al cargar los paquetes. Inténtalo más tarde.</Alert>}
-
-            {/* Mostrar alerta si no hay paquetes */}
-            {!fetchError && packages.length != 0 ? (
-              <Alert variant="warning" className="alertme text-center">No hay paquetes disponibles</Alert>
-            ) : (
               <Row className="mtrow d-flex justify-content-center">
-                {packages.map((pack, index) => (
-                  <Col md={4} key={index} className="col-message"
-                  onClick={() => window.location.href = `http://localhost:3000/packages/${pack.id}`}>
-                  </Col>
-                ))}
-              </Row>
-            )}
+                <div className="flex items-center justify-center min-h-screen p-4">
+                <Card className="w-full max-w-3xl p-6 space-y-4  rounded-2xl">
+                  <Form>
+                    <div className="add_image border-dashed border-2 p-10 flex justify-center items-center rounded-lg">
+                      <PlusIcon className='plusicon_image' size={32} />
+                    </div>
+                    <Form.Group>
+                      <Form.Control type="text" placeholder="Título del paquete" className="fc_cp" />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Control type="text" placeholder="Destino" className="fpc2 fc_cp" />
+                    </Form.Group>
+                    <div className="grid grid-cols-2 gap-4">
+                    <h3 className="text-title-add font-semibold text-lg">Fecha de Salida y de Regreso</h3>
+                      <Form.Group>
+                        <Form.Control type="date" className="fc_cp2" />
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Control type="date" className="fc_cp2" />
+                      </Form.Group>
+                    </div>
+
+                    <h3 className="text-title-add font-semibold text-lg">Este paquete incluye</h3>
+                    {sections.map((section, index) => (
+                      <Card key={index} className="p-4 space-y-2">
+                        <Form.Group>
+                          <Form.Control type="text" placeholder="Título de la sección" className="w-full" />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Control as="textarea" placeholder="Descripción" className="w-full" />
+                        </Form.Group>
+                      </Card>
+                    ))}
+                    <button type="button" onClick={() => addSection("package")} className="flex items-center space-x-2 text-blue-600">
+                      <PlusIcon size={16} /> <span>Agrega una nueva sección</span>
+                    </button>
+
+                    <h3 className="text-title-add font-semibold text-lg">Incluido en Destino</h3>
+                    {destinationSections.map((section, index) => (
+                      <Card key={index} className="p-4 space-y-2">
+                        <Form.Group>
+                          <Form.Control type="text" placeholder="Título de la sección" className="w-full" />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Control as="textarea" placeholder="Descripción" className="w-full" />
+                        </Form.Group>
+                      </Card>
+                    ))}
+                    <button type="button" onClick={() => addSection("destination")} className="flex items-center space-x-2 text-blue-600">
+                      <PlusIcon size={16} /> <span>Agrega una nueva sección</span>
+                    </button>
+                    <div className="row d-flex justify-content-center">
+                    <Button type="submit" className="w-full btn-final">Crear paquete</Button>
+                    </div>
+                  </Form>
+                </Card>
+              </div>
+            </Row>
 
           </Container>
         </div>
@@ -163,7 +208,7 @@ const Page = () => {
         .sidebar {
           width: 250px;
           height: 100vh;
-          background-color: #f8f9fa;
+          background-color: #FFFFFF;
           border-right: 1px solid #dee2e6;
           position: fixed;
           top: 0;

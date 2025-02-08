@@ -1,9 +1,59 @@
 body{
     overflow-x: hidden;
+    background-color: #FFFFFF !important;
 }
 
 .textl:hover{
     color: #215eb4;
+}
+
+
+.plusicon_image{
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.fpc2{
+    margin-top: 25px !important;
+}
+
+.btn-final{
+    font-family: 'Inter', sans-serif;
+    margin-top: 50px;
+    background-color: #13325D;
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    width: 11%;
+}
+
+.text-title-add{
+    margin-left: 8%;
+    margin-top: 50px;
+    font-size: 22px;
+    color: #3C3C50;
+}
+
+.fc_cp{
+    margin-top: 50px;
+    margin-left: 8% !important;
+    margin-right: 8% !important;
+    width: 20%;
+    border: 1px dashed #2e2e2e67;
+    font-size: 12px;
+    height: 30px !important;
+}
+
+.add_image{
+    height: 45vh !important;
+    border: 1px dashed #2e2e2e67;
+    border-radius: 10px;
+    margin-left: 8%;
+    margin-right: 8%;
+}
+
+.card{
+    border: none;
 }
 
 .dashboard{
@@ -93,7 +143,7 @@ body{
     align-items: center;
     height: 100vh; /* Ocupa toda la altura de la pantalla */
     width: 100vw; /* Opcional para asegurar ancho completo */
-    background-color: #f8f9fa; /* Fondo claro para el loader */
+    background-color: #FFFFFF; /* Fondo claro para el loader */
     position: fixed; /* Fija el loader en la pantalla */
     top: 0;
     left: 0;

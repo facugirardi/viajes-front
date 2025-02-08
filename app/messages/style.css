@@ -1,3 +1,7 @@
+body{
+    background-color: #FFFFFF !important;
+}
+
 .textl:hover{
     color: #215eb4;
 }
@@ -116,5 +120,5 @@
 }
 
 .leido:hover{
-    background-color: #9e9e9e2b !important;
+    background-color: #d0d0d02b !important;
 }

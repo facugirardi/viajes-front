@@ -1,4 +1,6 @@
-
+body{
+    background-color: #ffffff !important;
+}
 .textl:hover{
     color: #215eb4;
 }
@@ -168,7 +170,7 @@
 }
 
 .textarea-msg{
-    height: 250px !important;
+    height: 375px !important;
     margin-bottom: 80px;
     margin-top: 30px;
 }
