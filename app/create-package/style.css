@@ -9,8 +9,7 @@ body{
 
 
 .plusicon_image{
-    margin-left: auto !important;
-    margin-right: auto !important;
+    color: #2e2e2eac !important;
 }
 
 .fpc2{
@@ -24,8 +23,25 @@ body{
     border: none;
     border-radius: 6px;
     height: 40px;
-    width: 11%;
+    width: 200px;
 }
+
+.fc_cp_date1{
+    margin-left: 20%;
+    border: 1px dashed #2e2e2e67;
+    width: 50%;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.fc_cp_date2{
+    margin-left: -30%;
+    width: 50%;
+    font-size: 13px;
+    border: 1px dashed #2e2e2e67;
+    margin-top: 20px;
+}
+
 
 .text-title-add{
     margin-left: 8%;
@@ -38,13 +54,14 @@ body{
     margin-top: 50px;
     margin-left: 8% !important;
     margin-right: 8% !important;
-    width: 20%;
+    width: 25%;
     border: 1px dashed #2e2e2e67;
     font-size: 12px;
-    height: 30px !important;
+    height: 40px !important;
 }
 
 .add_image{
+    cursor: pointer;
     height: 45vh !important;
     border: 1px dashed #2e2e2e67;
     border-radius: 10px;
@@ -77,6 +94,52 @@ body{
     margin-left: auto;
     font-size: 14px;
     margin-right: auto;
+}
+
+.title-modal{
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #1a1a1a;
+    margin-left: 10px;
+}
+
+.mda_1{
+    margin-top: 20px;
+}
+
+.mda-2{
+    margin-bottom: 20px;
+}
+
+.mda-title{
+    margin-left: 8px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.title-section{
+    width: 100%;
+    margin-left: 10px;
+    border: 1px dashed #2e2e2e67;
+    font-size: 12px;
+    height: 40px !important;
+}
+
+.description-section{
+    border: 1px dashed #2e2e2e67;
+    font-size: 12px;
+    height: 100px !important;
+    margin-top: 20px;
+}
+
+.card-section{
+    margin-top: 50px;
+    margin-left: 8%;
+    margin-right: 8%;
+    width: 84%;
+    border: 1px solid #2e2e2e46;
+    font-size: 12px;
+    height: 210px !important;
+    border-radius: 6px;
 }
 
 .btn-read{
@@ -154,4 +217,46 @@ body{
     color: #007bff; /* Color del spinner */
     font-size: 1rem;
   }
+
+
+.add-section{
+    margin-top: 50px;
+    margin-left: 8%;
+    margin-right: 8%;
+    width: 84%;
+    border: 1px dashed #2e2e2e67;
+    font-size: 12px;
+    height: 175px !important;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.text-add-section{
+    color: #2E2E2E;
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 20px;
+}
   
+  @media (max-width: 771px) {
+    .text-add-section{
+        font-size: 14px;
+    }
+    
+    .fc_cp_date2{
+        margin-left: 8% !important;
+        margin-right: 8% !important;
+        width: 84% !important;
+    }
+    .fc_cp_date1{
+        margin-left: 8% !important;
+        margin-right: 8% !important;
+        width: 84% !important;
+    }
+  }
+  @media (max-width: 991px) {
+    .fc_cp{
+        width: 84% !important;
+    }
+
+}

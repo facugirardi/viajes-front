@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Card, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Card, Form, Button, Modal} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
 import "../globals2.css";
 import "./style.css";
-import { House, ChatText, Airplane, SignOut } from "phosphor-react";
+import { House, ChatText, Airplane, SignOut, CaretDown, MapTrifold, Bus  } from "phosphor-react";
 import { usePathname } from "next/navigation"; // Importar usePathname
-import { CalendarIcon, PlusIcon } from "lucide-react";
+import { CalendarIcon, CirclePlus  } from "lucide-react";
 
 const Page = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -15,18 +15,37 @@ const Page = () => {
   const [loading, setLoading] = useState(true); // Estado para el loader
   const [packages, setPackages] = useState([]); // Estado para los paquetes
   const [fetchError, setFetchError] = useState(false); // Estado para manejar errores de conexión
-  const [sections, setSections] = useState([{ title: "", description: "" }]);
+  const [sections, setSections] = useState([{ title: "", description: "", icon: <Bus size={24} /> }]);
   const [destinationSections, setDestinationSections] = useState([
-    { title: "", description: "" },
+    { title: "", description: "", icon: <Bus size={24} /> },
   ]);
+  const [selectedIcon, setSelectedIcon] = useState(<Bus size={24} />);
+  const [showModal, setShowModal] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
+  const [iconType, setIconType] = useState("");
 
   const addSection = (type) => {
+    const newSection = { title: "", description: "", icon: <Bus size={24} /> };
     if (type === "package") {
-      setSections([...sections, { title: "", description: "" }]);
+      setSections([...sections, newSection]);
     } else {
-      setDestinationSections([...destinationSections, { title: "", description: "" }]);
+      setDestinationSections([...destinationSections, newSection]);
     }
   };
+
+  const packageIcons = [
+    { name: "Bus", icon: <Bus size={24} /> },
+    { name: "Avión", icon: <Airplane size={24} /> },
+    { name: "Alojamiento", icon: <House size={24} /> },
+    { name: "Excursiones", icon: <MapTrifold  size={24} /> },
+  ];
+  
+  const destinationIcons = [
+    { name: "Bus", icon: <Bus size={24} /> },
+    { name: "Avión", icon: <Airplane size={24} /> },
+    { name: "Alojamiento", icon: <House size={24} /> },
+    { name: "Excursiones", icon: <MapTrifold  size={24} /> },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -72,6 +91,36 @@ const Page = () => {
     setSidebarOpen((prev) => !prev);
   };
 
+  const openIconSelector = (index, type) => {
+    setActiveSection({ index, type });
+    setIconType(type);
+    setShowModal(true);
+  };
+  const selectIcon = (icon) => {
+    if (activeSection) {
+      if (activeSection.type === "package") {
+        setSections((prevSections) => {
+          const updatedSections = [...prevSections];
+          updatedSections[activeSection.index] = {
+            ...updatedSections[activeSection.index],
+            icon,
+          };
+          return updatedSections;
+        });
+      } else if (activeSection.type === "destination") {
+        setDestinationSections((prevDestinationSections) => {
+          const updatedDestinationSections = [...prevDestinationSections];
+          updatedDestinationSections[activeSection.index] = {
+            ...updatedDestinationSections[activeSection.index],
+            icon,
+          };
+          return updatedDestinationSections;
+        });
+      }
+    }
+    setShowModal(false);
+  };
+  
   if (loading) {
     // Mostrar el loader mientras el estado `loading` sea true
     return (
@@ -139,8 +188,8 @@ const Page = () => {
                 <div className="flex items-center justify-center min-h-screen p-4">
                 <Card className="w-full max-w-3xl p-6 space-y-4  rounded-2xl">
                   <Form>
-                    <div className="add_image border-dashed border-2 p-10 flex justify-center items-center rounded-lg">
-                      <PlusIcon className='plusicon_image' size={32} />
+                    <div className="add_image border-dashed border-2 p-10 d-flex justify-content-center align-items-center rounded-lg">
+                      <CirclePlus className='plusicon_image' strokeWidth={1} size={50} />
                     </div>
                     <Form.Group>
                       <Form.Control type="text" placeholder="Título del paquete" className="fc_cp" />
@@ -150,45 +199,91 @@ const Page = () => {
                     </Form.Group>
                     <div className="grid grid-cols-2 gap-4">
                     <h3 className="text-title-add font-semibold text-lg">Fecha de Salida y de Regreso</h3>
+                    <div className="row">
+                      <div className="col-12 col-md-5">
                       <Form.Group>
-                        <Form.Control type="date" className="fc_cp2" />
+                        <Form.Control type="date" className="fc_cp_date1" />
                       </Form.Group>
+                      </div>
+                      <div className="col-12 col-md-5"> 
                       <Form.Group>
-                        <Form.Control type="date" className="fc_cp2" />
+                        <Form.Control type="date" className="fc_cp_date2" />
                       </Form.Group>
+                      </div>
+                      <div className="col-md-1">
+
+                      </div>
                     </div>
+                    </div>
+
+                    <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                      <Modal.Header closeButton>
+                        <Modal.Title className="title-modal">Selecciona un Icono</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <div className="grid grid-cols-2 mda-2">
+                          {(iconType === "package" ? packageIcons : destinationIcons).map((item, index) => (
+                            <div
+                              key={index}
+                              className="mda_1 flex items-center space-x-2 p-2 border rounded cursor-pointer hover:bg-gray-200"
+                              onClick={() => selectIcon(item.icon)}
+                            >
+                              {item.icon}
+                              <span className="mda-title">{item.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </Modal.Body>
+                    </Modal>
+
 
                     <h3 className="text-title-add font-semibold text-lg">Este paquete incluye</h3>
                     {sections.map((section, index) => (
-                      <Card key={index} className="p-4 space-y-2">
-                        <Form.Group>
-                          <Form.Control type="text" placeholder="Título de la sección" className="w-full" />
+                      <Card key={index} className="card-section p-4 space-y-2">
+                      <div className="d-flex align-items-center space-x-2">
+                      <div className="cursor-pointer" onClick={() => openIconSelector(index, "package")}> 
+                        {section.icon}
+                        <CaretDown size={12} />
+                      </div>
+
+                        <Form.Group className="d-flex">
+                          <Form.Control type="text" placeholder="Título de la sección" className="title-section" />
                         </Form.Group>
+                      </div>
                         <Form.Group>
-                          <Form.Control as="textarea" placeholder="Descripción" className="w-full" />
+                          <Form.Control as="textarea" placeholder="Descripción" className="description-section w-full" />
                         </Form.Group>
                       </Card>
                     ))}
-                    <button type="button" onClick={() => addSection("package")} className="flex items-center space-x-2 text-blue-600">
-                      <PlusIcon size={16} /> <span>Agrega una nueva sección</span>
-                    </button>
+
+                    <div className="add-section d-flex justify-content-center align-items-center" onClick={() => addSection("package")}>
+                      <CirclePlus strokeWidth={1}  size={40} /> <span className="text-add-section">Agrega una nueva sección</span>
+                    </div>
 
                     <h3 className="text-title-add font-semibold text-lg">Incluido en Destino</h3>
                     {destinationSections.map((section, index) => (
-                      <Card key={index} className="p-4 space-y-2">
-                        <Form.Group>
-                          <Form.Control type="text" placeholder="Título de la sección" className="w-full" />
+                      <Card key={index} className="card-section p-4 space-y-2">
+                      <div className="d-flex align-items-center space-x-2">
+                        <div className="cursor-pointer" onClick={() => openIconSelector(index, "destination")}> 
+                          {section.icon}
+                          <CaretDown size={12} />
+                        </div>
+                        <Form.Group className="d-flex">
+                          <Form.Control type="text" placeholder="Título de la sección" className="title-section" />
                         </Form.Group>
+                      </div>
                         <Form.Group>
-                          <Form.Control as="textarea" placeholder="Descripción" className="w-full" />
+                          <Form.Control as="textarea" placeholder="Descripción" className="description-section w-full" />
                         </Form.Group>
                       </Card>
                     ))}
-                    <button type="button" onClick={() => addSection("destination")} className="flex items-center space-x-2 text-blue-600">
-                      <PlusIcon size={16} /> <span>Agrega una nueva sección</span>
-                    </button>
+
+                    <div className="add-section d-flex justify-content-center align-items-center" onClick={() => addSection("destination")}>
+                      <CirclePlus strokeWidth={1}  size={40}  /> <span className="text-add-section">Agrega una nueva sección</span>
+                    </div>
+
                     <div className="row d-flex justify-content-center">
-                    <Button type="submit" className="w-full btn-final">Crear paquete</Button>
+                    <Button type="submit" className="w-full btn-final">Crear Paquete</Button>
                     </div>
                   </Form>
                 </Card>
