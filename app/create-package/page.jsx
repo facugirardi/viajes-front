@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Card, Form, Button, Modal} from "react-bootstrap";
+import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Card, Form, Button, Modal, ListGroup, CloseButton  } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
 import "../globals2.css";
@@ -8,6 +8,7 @@ import "./style.css";
 import { House, ChatText, Airplane, SignOut, CaretDown, MapTrifold, Bus  } from "phosphor-react";
 import { usePathname } from "next/navigation"; // Importar usePathname
 import { CalendarIcon, CirclePlus  } from "lucide-react";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -23,6 +24,88 @@ const Page = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
   const [iconType, setIconType] = useState("");
+  const [uploadedImages, setUploadedImages] = useState([]); // Estado para almacenar las imágenes
+  const [formData, setFormData] = useState({
+    title: "",
+    destination: "",
+    departureDate: "",
+    returnDate: "",
+    sections: [{ title: "", description: "", icon: <Bus size={24} /> }],
+    destinationSections: [{ title: "", description: "", icon: <Bus size={24} /> }],
+    uploadedImages: [],
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    setFormData((prevFormData) => ({
+      ...prevFormData,  // Copiamos el estado anterior
+      [name]: value,    // Actualizamos solo el campo modificado
+    }));
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    
+    // Agregar los campos principales
+    data.append("title", formData.title);
+    data.append("destination", formData.destination);
+    data.append("departureDate", formData.departureDate);
+    data.append("returnDate", formData.returnDate);
+
+    // Agregar las secciones del paquete
+    sections.forEach((section, index) => {
+      data.append(`sections[${index}][title]`, section.title);
+      data.append(`sections[${index}][description]`, section.description);
+    });
+
+    // Agregar las secciones de destino
+    destinationSections.forEach((section, index) => {
+      data.append(`destinationSections[${index}][title]`, section.title);
+      data.append(`destinationSections[${index}][description]`, section.description);
+    });
+
+    // Agregar imágenes
+    uploadedImages.forEach((file) => {
+      data.append("images", file); // Aquí nos aseguramos de que estamos enviando el objeto File
+  });
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/api/create_package", {
+            method: "POST",
+            body: data,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log("Respuesta del servidor:", result);
+        toast.success("Paquete creado con éxito");
+
+        // Resetear el formulario después del éxito
+        setFormData({
+            title: "",
+            destination: "",
+            departureDate: "",
+            returnDate: "",
+        });
+        setSections([{ title: "", description: "", icon: <Bus size={24} /> }]);
+        setDestinationSections([{ title: "", description: "", icon: <Bus size={24} /> }]);
+        setUploadedImages([]);
+
+    } catch (error) {
+        console.error("Error al enviar los datos:", error);
+        toast.error("Error al crear el paquete");
+    }
+};
+
+const handleImageUpload = (event) => {
+  const files = Array.from(event.target.files);
+  setUploadedImages((prev) => [...prev, ...files]); // Guardamos los objetos File
+};
 
   const addSection = (type) => {
     const newSection = { title: "", description: "", icon: <Bus size={24} /> };
@@ -30,6 +113,16 @@ const Page = () => {
       setSections([...sections, newSection]);
     } else {
       setDestinationSections([...destinationSections, newSection]);
+    }
+  };
+  const removeImage = (index) => {
+    setUploadedImages(uploadedImages.filter((_, i) => i !== index));
+  };
+  const removeSection = (type, index) => {
+    if (type === "package") {
+      setSections(sections.filter((_, i) => i !== index));
+    } else {
+      setDestinationSections(destinationSections.filter((_, i) => i !== index));
     }
   };
 
@@ -81,6 +174,18 @@ const Page = () => {
   
   }, []);
 
+  const handleSectionChange = (type, index, field, value) => {
+    if (type === "package") {
+      const updatedSections = [...sections];
+      updatedSections[index] = { ...updatedSections[index], [field]: value };
+      setSections(updatedSections);
+    } else {
+      const updatedDestinationSections = [...destinationSections];
+      updatedDestinationSections[index] = { ...updatedDestinationSections[index], [field]: value };
+      setDestinationSections(updatedDestinationSections);
+    }
+  };
+      
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -188,26 +293,37 @@ const Page = () => {
                 <div className="flex items-center justify-center min-h-screen p-4">
                 <Card className="w-full max-w-3xl p-6 space-y-4  rounded-2xl">
                   <Form>
-                    <div className="add_image border-dashed border-2 p-10 d-flex justify-content-center align-items-center rounded-lg">
-                      <CirclePlus className='plusicon_image' strokeWidth={1} size={50} />
-                    </div>
+                    <label htmlFor="imageUpload" className="add_image border-dashed border-2 p-10 d-flex justify-content-center align-items-center rounded-lg cursor-pointer">
+                      <CirclePlus className="plusicon_image" strokeWidth={1} size={50} />
+                    </label>
+                    <input type="file" id="imageUpload" multiple className="d-none" onChange={handleImageUpload} />
+
+                    {/* Lista de imágenes subidas */}
+                    <ListGroup className="listgroup_images mt-3">
+                      {uploadedImages.map((file, index) => (
+                        <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
+                          {file.name}
+                          <CloseButton onClick={() => removeImage(index)} />
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
                     <Form.Group>
-                      <Form.Control type="text" placeholder="Título del paquete" className="fc_cp" />
+                      <Form.Control type="text" name='title' placeholder="Título del paquete" className="fc_cp" value={formData.title} onChange={handleChange} />
                     </Form.Group>
                     <Form.Group>
-                      <Form.Control type="text" placeholder="Destino" className="fpc2 fc_cp" />
+                      <Form.Control type="text" name="destination" placeholder="Destino" className="fpc2 fc_cp" value={formData.destination} onChange={handleChange} />
                     </Form.Group>
                     <div className="grid grid-cols-2 gap-4">
                     <h3 className="text-title-add font-semibold text-lg">Fecha de Salida y de Regreso</h3>
                     <div className="row">
                       <div className="col-12 col-md-5">
                       <Form.Group>
-                        <Form.Control type="date" className="fc_cp_date1" />
+                        <Form.Control type="date" name="departureDate" className="fc_cp_date1" value={formData.departureDate} onChange={handleChange} />
                       </Form.Group>
                       </div>
                       <div className="col-12 col-md-5"> 
                       <Form.Group>
-                        <Form.Control type="date" className="fc_cp_date2" />
+                        <Form.Control type="date" name="returnDate" className="fc_cp_date2" value={formData.returnDate} onChange={handleChange} />
                       </Form.Group>
                       </div>
                       <div className="col-md-1">
@@ -218,7 +334,7 @@ const Page = () => {
 
                     <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                       <Modal.Header closeButton>
-                        <Modal.Title className="title-modal">Selecciona un Icono</Modal.Title>
+                        <Modal.Title className="title-modal">Selecciona una sección</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <div className="grid grid-cols-2 mda-2">
@@ -235,7 +351,7 @@ const Page = () => {
                         </div>
                       </Modal.Body>
                     </Modal>
-
+                    {/*  */}
 
                     <h3 className="text-title-add font-semibold text-lg">Este paquete incluye</h3>
                     {sections.map((section, index) => (
@@ -247,12 +363,21 @@ const Page = () => {
                       </div>
 
                         <Form.Group className="d-flex">
-                          <Form.Control type="text" placeholder="Título de la sección" className="title-section" />
+                          <Form.Control type="text" placeholder="Título de la sección" className="title-section" 
+                            value={section.title}
+                            onChange={(e) => handleSectionChange("package", index, "title", e.target.value)}
+                          />
                         </Form.Group>
                       </div>
                         <Form.Group>
-                          <Form.Control as="textarea" placeholder="Descripción" className="description-section w-full" />
+                          <Form.Control as="textarea" placeholder="Descripción" className="description-section w-full" 
+                            value={section.description}
+                            onChange={(e) => handleSectionChange("package", index, "description", e.target.value)}
+                          />
                         </Form.Group>
+                        <div className="row d-flex justify-content-center">
+                          <Button type="button" onClick={() =>removeSection("package", index)} className="w-full btn-final2">Eliminar Sección</Button>
+                        </div>
                       </Card>
                     ))}
 
@@ -269,12 +394,21 @@ const Page = () => {
                           <CaretDown size={12} />
                         </div>
                         <Form.Group className="d-flex">
-                          <Form.Control type="text" placeholder="Título de la sección" className="title-section" />
+                          <Form.Control type="text" placeholder="Título de la sección" className="title-section" 
+                            value={section.title}
+                            onChange={(e) => handleSectionChange("destination", index, "title", e.target.value)}
+                          />
                         </Form.Group>
                       </div>
                         <Form.Group>
-                          <Form.Control as="textarea" placeholder="Descripción" className="description-section w-full" />
+                          <Form.Control as="textarea" placeholder="Descripción" className="description-section w-full" 
+                            value={section.description}
+                            onChange={(e) => handleSectionChange("destination", index, "description", e.target.value)}
+                          />
                         </Form.Group>
+                        <div className="row d-flex justify-content-center">
+                          <Button type="button" onClick={() =>removeSection("destination", index)} className="w-full btn-final2">Eliminar Sección</Button>
+                        </div>
                       </Card>
                     ))}
 
@@ -283,7 +417,9 @@ const Page = () => {
                     </div>
 
                     <div className="row d-flex justify-content-center">
-                    <Button type="submit" className="w-full btn-final">Crear Paquete</Button>
+                    <Button type="submit" className="w-full btn-final" onClick={handleSubmit}>
+                      Crear Paquete
+                    </Button>
                     </div>
                   </Form>
                 </Card>
