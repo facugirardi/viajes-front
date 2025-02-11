@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Footer from "@/layouts/Footer";
-
+import './page.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
 import "@/public/assets/vendor/boxicons/css/boxicons.min.css";
@@ -22,12 +22,45 @@ import './globals2.css'
 
 const page = () => {
   const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
-
+  const [packages, setPackages] = useState([]);
+  const [fetchError, setFetchError] = useState(false);
+  
   const toggleNav = () => {
     console.log('gs')
     setIsNavOpen(!isNavOpen);
   };
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/packages");
+        const data = await response.json();
+  
+        if (response.ok) {
+          setPackages([]); // 🔄 Limpiar antes de actualizar (evita problemas de renderizado)
+          setTimeout(() => {
+            setPackages(data);
+          }, 0); // 🔄 Forzar re-render
+        } else {
+          setFetchError(true);
+        }
+      } catch (err) {
+        console.error("Error al obtener los paquetes:", err);
+        setFetchError(true);
+      }
+    };
+  
+    fetchPackages();
+  }, []);
 
+  useEffect(() => {
+    const container = document.querySelector(".portfolio-container");
+    if (container) {
+      container.style.height = "auto"; // Ajusta la altura automáticamente
+      container.style.display = "flex";
+      container.style.flexWrap = "wrap";
+    }
+  }, [packages]); // Se ejecuta cada vez que `packages` cambia
+  
   return (
     <>
       <hr className="top-line" />
@@ -71,7 +104,7 @@ const page = () => {
 
       <main id="main">
 
-      <section id="portfolio" className="portfolio">
+      {/* <section id="portfolio" className="portfolio">
         <div className="container">
 
           <div className="section-title">
@@ -134,7 +167,46 @@ const page = () => {
           </div>
 
         </div>
-      </section>
+      </section> */}
+<section id="portfolio" className="portfolio">
+  <div className="container">
+    <div className="section-title">
+      <h3>Destinos <span>Destacados</span></h3>
+    </div>
+
+    <div className="row portfolio-container ">
+      {packages?.length > 0 ? (
+        packages.map((pack) => (
+          <div key={pack.id} className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
+            <img src={pack.images?.[0] || "/assets/images/places/image.png"} className="container-destinos img-fluid" alt={pack.name} />
+            <div className="portfolio-info d-flex align-items-center justify-content-center">
+              <h4>{pack.name}</h4>
+            </div>
+          </div>
+        ))
+      ) : (
+        !fetchError && (
+          <div className="col-12 text-center">
+            <p className="alert alert-warning">No hay paquetes disponibles.</p>
+          </div>
+        )
+      )}
+    </div>
+
+    {/* Botón "VER TODOS" solo si hay paquetes */}
+    {packages?.length > 0 && (
+      <div className="text-center">
+        <button 
+          className="btn-load-more contact-button" 
+          onClick={() => window.location.href = '/destinos'}
+        >
+          VER TODOS
+        </button>
+      </div>
+    )}
+  </div>
+</section>
+
 
       <section id="services" className="services">
       <div className="services-section">

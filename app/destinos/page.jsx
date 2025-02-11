@@ -20,12 +20,45 @@ import "@/public/assets/js/main.js";
 import '../globals2.css'
 
 const page = () => {
-    const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
+  const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
+  const [packages, setPackages] = useState([]);
+  const [fetchError, setFetchError] = useState(false);
 
   const toggleNav = () => {
     console.log('gs')
     setIsNavOpen(!isNavOpen);
   };
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/packages");
+        const data = await response.json();
+  
+        if (response.ok) {
+          setPackages([]); // 🔄 Limpiar antes de actualizar (evita problemas de renderizado)
+          setTimeout(() => {
+            setPackages(data);
+          }, 0); // 🔄 Forzar re-render
+        } else {
+          setFetchError(true);
+        }
+      } catch (err) {
+        console.error("Error al obtener los paquetes:", err);
+        setFetchError(true);
+      }
+    };
+  
+    fetchPackages();
+  }, []);
+
+  useEffect(() => {
+    const container = document.querySelector(".portfolio-container");
+    if (container) {
+      container.style.height = "auto"; // Ajusta la altura automáticamente
+      container.style.display = "flex";
+      container.style.flexWrap = "wrap";
+    }
+  }, [packages]); // Se ejecuta cada vez que `packages` cambia
 
   return (
     <>
@@ -68,60 +101,43 @@ const page = () => {
       <div className="margin-destinos2"></div>
 
       <section id="portfolio" className="portfolio">
-        <div className="container">
+  <div className="container">
+    <div className="section-title">
+      <h3>Destinos <span>Destacados</span></h3>
+    </div>
 
-          <div className="section-title">
-            <h3>Nuestros <span>Destinos</span></h3>
+    <div className="row portfolio-container ">
+      {packages?.length > 0 ? (
+        packages.map((pack) => (
+          <div key={pack.id} className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
+            <img src={pack.images?.[0] || "/assets/images/places/image.png"} className="container-destinos img-fluid" alt={pack.name} />
+            <div className="portfolio-info d-flex align-items-center justify-content-center">
+              <h4>{pack.name}</h4>
+            </div>
           </div>
-
-          <div className="row portfolio-container">
-
-            <div className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
-              <img src="assets/images/places/image.png" className="container-destinos img-fluid" alt="" />
-              <div className="portfolio-info d-flex align-items-center justify-content-center">
-                <h4>Dubai</h4>
-              </div>
-            </div>
-            
-            <div className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-web">
-              <img src="assets/images/places/image2.png" className="container-destinos img-fluid" alt="" />
-              <div className="portfolio-info  d-flex align-items-center justify-content-center">
-                <h4>Costa Rica</h4>
-              </div>
-            </div>
-              
-            <div className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
-              <img src="assets/images/places/image3.png" className="container-destinos img-fluid" alt="" />
-              <div className="portfolio-info d-flex align-items-center justify-content-center">
-                <h4>Islas Maldivas</h4>
-              </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-card">
-              <img src="assets/images/places/image4.png" className="container-destinos img-fluid" alt="" />
-              <div className="portfolio-info d-flex align-items-center justify-content-center">
-                <h4>Argentina</h4>
-              </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-web">
-              <img src="assets/images/places/image5.png" className="container-destinos img-fluid" alt="" />
-              <div className="portfolio-info d-flex align-items-center justify-content-center">
-                <h4>Egipto</h4>
-              </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
-              <img src="assets/images/places/image6.png" className="container-destinos img-fluid" alt="" />
-              <div className="portfolio-info d-flex align-items-center justify-content-center">
-                <h4>Islas Mauricio</h4>
-              </div>
-            </div>
-
+        ))
+      ) : (
+        !fetchError && (
+          <div className="col-12 text-center">
+            <p className="alert alert-warning">No hay paquetes disponibles.</p>
           </div>
+        )
+      )}
+    </div>
 
-        </div>
-      </section>
+    {/* Botón "VER TODOS" solo si hay paquetes */}
+    {packages?.length > 0 && (
+      <div className="text-center">
+        <button 
+          className="btn-load-more contact-button" 
+          onClick={() => window.location.href = '/destinos'}
+        >
+          VER TODOS
+        </button>
+      </div>
+    )}
+  </div>
+</section>
       <a href="https://wa.me/5493513934673" target="_blank" class="whatsapp-float">
         <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" class="whatsapp-icon" />
       </a>

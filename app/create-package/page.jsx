@@ -95,6 +95,7 @@ const Page = () => {
         setSections([{ title: "", description: "", icon: <Bus size={24} /> }]);
         setDestinationSections([{ title: "", description: "", icon: <Bus size={24} /> }]);
         setUploadedImages([]);
+        window.location.reload(); // Recargar la lista de paquetes
 
     } catch (error) {
         console.error("Error al enviar los datos:", error);
@@ -258,7 +259,7 @@ const handleImageUpload = (event) => {
             </Nav.Link>
             <Nav.Link
               href="/dashboard"
-              className={`textl ${pathname === "/dashboard" ? "active-link" : ""}`}
+              className="textl active-link"
             >
               <Airplane size={20} weight="bold" className="me-2" /> Paquetes
             </Nav.Link>

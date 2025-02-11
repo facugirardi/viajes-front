@@ -1702,6 +1702,7 @@ section {
 
 .portfolio .portfolio-item {
   margin-bottom: 15px;
+  position: relative;
   overflow: hidden;
 }
 
@@ -3164,6 +3165,10 @@ section {
   margin-right: auto;
   font-family: 'Poppins', sans-serif;
   margin-left: auto;
+}
+
+.alerta2{
+  margin-bottom: 50px !important; 
 }
 
 .custom-form .form-label {
