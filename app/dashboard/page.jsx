@@ -189,6 +189,7 @@ const Page = () => {
                         variant="top"
                         src={pack.images?.[0] || "/assets/images/places/image.png"}
                         className="package-image"
+                        onClick={() => window.location.href = `http://localhost:3000/edit-package/${pack.id}`}
                       />
 
                       {/* Nombre del paquete en hover */}

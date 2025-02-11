@@ -176,7 +176,7 @@ const page = () => {
 
     <div className="row portfolio-container ">
       {packages?.length > 0 ? (
-        packages.map((pack) => (
+        packages?.slice(0, 3).map((pack) =>  (
           <div key={pack.id} className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
             <img src={pack.images?.[0] || "/assets/images/places/image.png"} className="container-destinos img-fluid" alt={pack.name} />
             <div className="portfolio-info d-flex align-items-center justify-content-center">
