@@ -366,7 +366,7 @@ const onChangeDestino = (_, { newValue }) => {
     switch (activeTab) {
       case "viajes":
         return (
-          <form className="custom-form" onSubmit={handleSubmit}>
+          <form className="container custom-form" onSubmit={handleSubmit}>
             <div className="row mb-3">
               <div className="col-12 col-md-6">
                 <label htmlFor="name" className="form-label">
@@ -476,7 +476,7 @@ const onChangeDestino = (_, { newValue }) => {
         );
         case "aereos":
           return (
-            <form className="custom-form" onSubmit={handleSubmit}>
+            <form className="container custom-form" onSubmit={handleSubmit}>
               <div className="row mb-3">
                 <div className="col-12 col-md-5">
                   <label htmlFor="nombreCompleto" className="form-label">
@@ -638,7 +638,7 @@ const onChangeDestino = (_, { newValue }) => {
         
         case "alojamiento":
           return (
-            <form className="custom-form" onSubmit={handleSubmit}>
+            <form className="container custom-form" onSubmit={handleSubmit}>
               <div className="row mb-3">
                 <div className="col-12 col-md-6">
                   <label htmlFor="nombreCompleto" className="form-label">
@@ -748,7 +748,7 @@ const onChangeDestino = (_, { newValue }) => {
         
         case "paquetes":
           return (
-            <form className="custom-form" onSubmit={handleSubmit}>
+            <form className="container custom-form" onSubmit={handleSubmit}>
               <div className="row mb-3">
                 <div className="col-12 col-md-6">
                   <label htmlFor="nombreCompleto" className="form-label">
