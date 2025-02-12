@@ -12,12 +12,9 @@ import "@/public/assets/vendor/remixicon/remixicon.css";
 import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
 import {  Spinner  } from "react-bootstrap";
 
-import Swiper, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import GLightbox from 'glightbox';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Isotope from "isotope-layout";
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "@/public/assets/js/main.js";
 import './globals2.css'
 

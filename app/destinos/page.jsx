@@ -1,7 +1,5 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import Footer from "@/layouts/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
@@ -12,12 +10,9 @@ import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
 import './style.css';
 import {  Spinner  } from "react-bootstrap";
 
-import Swiper, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import GLightbox from 'glightbox';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Isotope from "isotope-layout";
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "@/public/assets/js/main.js";
 import '../globals2.css'
 

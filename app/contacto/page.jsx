@@ -1,7 +1,5 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import { toast } from "react-toastify";
 import Footer from "@/layouts/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
@@ -10,12 +8,9 @@ import "@/public/assets/vendor/glightbox/css/glightbox.min.css";
 import "@/public/assets/vendor/remixicon/remixicon.css";
 import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
 import debounce from "lodash.debounce";
-import Swiper, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import GLightbox from 'glightbox';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Isotope from "isotope-layout";
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "@/public/assets/js/main.js";
 import '../globals2.css'
 import './contact.css'
