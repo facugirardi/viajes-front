@@ -11,12 +11,9 @@ import "@/public/assets/vendor/boxicons/css/boxicons.min.css";
 import "@/public/assets/vendor/glightbox/css/glightbox.min.css";
 import "@/public/assets/vendor/remixicon/remixicon.css";
 import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
-import Swiper, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import GLightbox from 'glightbox';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Isotope from "isotope-layout";
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "@/public/assets/js/main.js";
 import './login-styles.css'
 import '../globals2.css'
