@@ -104,7 +104,6 @@ const SignIn = () => {
       <div className="wrapper">
         <form onSubmit={handleSubmit}>
           <div className="flex-item-logo">
-            <img src="/assets/images/vaidpng3.png" alt="" className="imgLogo_login" />
           </div>
 
           <div className="flex-item">
