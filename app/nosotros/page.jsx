@@ -9,7 +9,7 @@ import "@/public/assets/vendor/boxicons/css/boxicons.min.css";
 // import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
 // import "swiper/css";
 // import "swiper/css/pagination";
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "@/public/assets/js/main.js";
 import '../globals2.css'
 
