@@ -14,12 +14,6 @@ import "@/public/assets/js/main.js";
 import '../globals2.css'
 
 const page = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
-
-  const toggleNav = () => {
-    console.log('gs')
-    setIsNavOpen(!isNavOpen);
-  };
 
   return (
     <>
@@ -42,9 +36,6 @@ const page = () => {
                   <li><a className="nav-link scrollto active" href="/nosotros">NOSOTROS</a></li>  
                   <li><a className="nav-link scrollto contact-li" href="/contacto">CONTACTO</a></li>  
               </ul>
-              <button className="mobile-nav-toggle" onClick={toggleNav}>
-                <i className={`bi ${isNavOpen ? "bi-x" : "bi-list"}`}></i>
-              </button>
             </nav>
             <div className="col-lg-4 col-md-4 d-flex justify-content-end cont-li" >
               <a className="contact-button nav-link scrollto" href="/contacto">CONTACTO</a>
