@@ -26,6 +26,12 @@ const page = () => {
   const [packages, setPackages] = useState([]);
   const [fetchError, setFetchError] = useState(false);
   const [loading, setLoading] = useState(true); // Estado para el loader
+
+  const handleNavigation = (url) => {
+    if (typeof window !== "undefined") {
+      window.location.href = url;
+    }
+  };
   
   const toggleNav = () => {
     console.log('gs')
@@ -192,7 +198,7 @@ const page = () => {
     <div className="row portfolio-container ">
       {packages?.length > 0 ? (
         packages?.slice(0, 3).map((pack) =>  (
-          <div key={pack.id} onClick={() => window.location.href = `/destinos/${pack.id}`} className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
+          <div key={pack.id} onClick={() => wihandleNavigation(`/destinos/${pack.id}`)} className="col-lg-4 col-md-6 col-sm-6 portfolio-item filter-app">
             <img src={pack.images?.[0] || "/assets/images/places/image.png"} className="container-destinos img-fluid" alt={pack.name} />
             <div className="portfolio-info d-flex align-items-center justify-content-center">
               <h4>{pack.name}</h4>
@@ -213,7 +219,7 @@ const page = () => {
       <div className="text-center">
         <button 
           className="btn-load-more contact-button" 
-          onClick={() => window.location.href = '/destinos'}
+          onClick={() => handleNavigation('/destinos')}
         >
           VER TODOS
         </button>
