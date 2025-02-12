@@ -78,7 +78,7 @@ const SignIn = () => {
           <div className="row">
             <div className="col-lg-4 col-md-4 d-flex align-items-center">
               <a href="/" className="logo">
-                <img src="assets/images/logo.png" alt="" className="img-fluid" />
+                <img src="/assets/images/logo.png" alt="" className="img-fluid" />
               </a>
             </div>
             <nav id="navbar" className="navbar col-lg-4 col-md-4 justify-content-end ">
