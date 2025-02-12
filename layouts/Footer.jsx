@@ -57,7 +57,7 @@ const Footer = () => {
             </div>
           </div>
           <hr style={{width:'60%', textAlign: 'center', marginLeft: 'auto', marginRight:'auto', color:'#968778', borderWidth: '2px'}} />
-          <p className="text-center">Vaya Pasajes y Turismo | Desarrollado por Developers</p>
+          <p className="text-center">Vaya Pasajes y Turismo | Desarrollado por <a href="https://www.linkedin.com/in/facugirardi/" target='_blank' className='a-names'>Facundo Girardi</a> y <a target='_blank' className='a-names' href="https://www.linkedin.com/in/alejo-vaquero-3b62a820b/">Alejo Vaquero</a></p>
         </div>
   
         </footer>  

@@ -1198,6 +1198,11 @@ a:hover {
   }
 }
 
+.a-names{
+  text-decoration: none;
+  color: #D99330;
+}
+
 @media (max-width: 768px) {
   #hero h3 {
     font-size: 22px;
