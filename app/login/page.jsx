@@ -43,6 +43,10 @@ const SignIn = () => {
       [name]: value,
     }));
   };
+  const toggleNav = () => {
+    console.log('gs')
+    setIsNavOpen(!isNavOpen);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,7 +96,9 @@ const SignIn = () => {
                 <li><a className="nav-link scrollto " href="/nosotros">NOSOTROS</a></li>  
                 <li><a className="nav-link scrollto contact-li" href="/contacto">CONTACTO</a></li>  
               </ul>
-              <i className="bi bi-list mobile-nav-toggle"></i>
+              <button className="mobile-nav-toggle" onClick={toggleNav}>
+                <i className={`bi ${isNavOpen ? "bi-x" : "bi-list"}`}></i>
+              </button>
             </nav>
             <div className="col-lg-4 col-md-4 d-flex justify-content-end cont-li" >
               <a className="contact-button nav-link scrollto" href="/contacto">CONTACTO</a>
