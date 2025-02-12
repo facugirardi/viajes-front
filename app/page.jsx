@@ -11,6 +11,7 @@ import "@/public/assets/vendor/glightbox/css/glightbox.min.css";
 import "@/public/assets/vendor/remixicon/remixicon.css";
 import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
 import {  Spinner  } from "react-bootstrap";
+import Head from "next/head";
 
 import "swiper/css";
 import "swiper/css/pagination";
