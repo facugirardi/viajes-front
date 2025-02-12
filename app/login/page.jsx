@@ -27,6 +27,7 @@ const SignIn = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
 
   // Redirigir al dashboard si ya está logueado
   useEffect(() => {
