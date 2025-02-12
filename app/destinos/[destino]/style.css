@@ -4,12 +4,13 @@
 }
 
 .package_image{
-    width: 60%;
+    width: 95%;
     margin-bottom: 30px;
 }
 
 .img-package{
     border-radius: 14px;
+    cursor: pointer;
 }
 
 .title-n1{
@@ -81,4 +82,114 @@
     padding: 5px;
     border-radius: 3px;
     background-color: #EDB04F;
+}
+
+.btn-see-more{
+    color: #3C3C50;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 34px;
+    border: 1px solid #3C3C50;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.box-contact{
+    background-color: white;
+    border-color: #3C3C50 !important;
+    height: 315px !important;
+    border-radius: 14px !important;
+    width: 22% !important;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 100px !important;
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    width: 100vw; /* Opcional para asegurar ancho completo */
+    background-color: #FFFFFF; /* Fondo claro para el loader */
+    position: fixed; /* Fija el loader en la pantalla */
+    top: 0;
+    left: 0;
+    z-index: 1050; /* Asegura que esté sobre otros elementos */
+  }
+  
+  .loader {
+    color: #EDB04F; /* Color del spinner */
+    font-size: 1rem;
+  }
+
+.title-contact-package{
+    color: #3C3C50 !important;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 35px;
+}
+
+.contact-icon{
+    color: #3C3C50 !important;
+    margin-right: 10px;
+}
+
+.p-contact{
+    margin-left: 15px;
+    color: #3C3C50 !important;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-contact-package{
+    background-color: #EDB04F;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 50px;
+    color: white;
+    height: 50px;
+    width: 65%;
+    margin-top: 30px;
+}
+
+
+@media (max-width: 1200px) {
+    .box-contact{
+        width: 40% !important;
+    }
+    .date-container{
+        width: 66% !important;
+    }
+
+}
+
+@media (max-width: 771px) {
+    .card-section{
+        width: 100% !important;
+    }
+
+    .package_image{
+        width: 100%;
+        margin-top: 50px;
+    }
+
+    .btn-see-more{
+        margin-top: 60px !important;
+    }
+
+    .box-contact{
+        width: 100% !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        margin-bottom: 50px;
+        height: 310px !important;
+    }
+    .date-container{
+        width: 95% !important;
+    }
+}
+
+@media (max-width: 395px) {
+    .orange_square{
+        display: none;
+    }
 }

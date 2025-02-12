@@ -37,6 +37,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.3.5",
     "react-feather": "^2.0.10",
+    "react-image-lightbox": "^5.1.4",
     "react-player": "^2.14.1",
     "react-responsive": "^10.0.0",
     "react-select": "^5.9.0",
@@ -47,6 +48,7 @@
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "^3.4.17",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "yet-another-react-lightbox": "^3.21.7"
   }
 }

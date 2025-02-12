@@ -1,7 +1,5 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import Footer from "@/layouts/Footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "@/public/assets/vendor/bootstrap-icons/bootstrap-icons.css";
@@ -10,17 +8,17 @@ import "@/public/assets/vendor/glightbox/css/glightbox.min.css";
 import "@/public/assets/vendor/remixicon/remixicon.css";
 import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
 import { Container, Row, Col, Nav, Navbar, Spinner, Alert, Card, Form, Button, Modal, ListGroup, CloseButton  } from "react-bootstrap";
-import { House, ChatText, Airplane, SignOut, CaretDown, MapTrifold, Bus  } from "phosphor-react";
+import { House, ChatText, Airplane, SignOut, CaretDown, MapTrifold, Bus, Phone, EnvelopeSimple, InstagramLogo  } from "phosphor-react";
 import { CalendarIcon, CirclePlus  } from "lucide-react";
-import Swiper, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import GLightbox from 'glightbox';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Isotope from "isotope-layout";
 import "@/public/assets/js/main.js";
 import '../../globals2.css'
 import './style.css';
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import { Fullscreen, Thumbnails, Zoom } from "yet-another-react-lightbox/plugins";
 
 const page = () => {
   const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
@@ -33,6 +31,7 @@ const page = () => {
     destinationSections: [{ title: "", description: "", icon: <Bus size={24} /> }],
     uploadedImages: [],
   });
+  const [loading, setLoading] = useState(true); // Estado para el loader
   const [packages, setPackages] = useState([]); // Estado para los paquetes
   const [fetchError, setFetchError] = useState(false); // Estado para manejar errores de conexión
   const [sections, setSections] = useState([]);
@@ -56,6 +55,11 @@ const page = () => {
   const [cantidadDias, setCantidadDias] = useState(0);
   const [cantidadNoches, setCantidadNoches] = useState(0);
   const [fechaFormateada, setFechaFormateada] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const [key, setKey] = useState(0);
+  const images = existingImages.length > 0 ? existingImages.map((img) => ({ src: img })) : [{ src: "/assets/images/default.jpg" }];
+
   
   const calcularDiasYNoches = (departureDate, returnDate) => {
     if (!departureDate || !returnDate) return { dias: 0, noches: 0, fechaFormateada: "" };
@@ -85,7 +89,14 @@ const page = () => {
       setFechaFormateada(fechaFormateada);
     }
   }, [formData.departureDate, formData.returnDate]);
-  
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => setKey((prevKey) => prevKey + 1), 100); // Asegura re-render
+    }
+  }, [isOpen]);
+
+
   useEffect(() => {
     const fetchPackageData = async () => {
       try {
@@ -103,7 +114,7 @@ const page = () => {
         });
   
         setExistingImages(data.images || []);
-  
+        
         setSections(data.sections.map(section => {
           console.log("🔍 Sección cargada:", section); // Depurar cada sección
           return {
@@ -153,6 +164,7 @@ const page = () => {
     };
   
     fetchPackages();
+    setTimeout(() => setLoading(false), 1400);
   }, []);
 
   const formatTextWithLineBreaks = (text) => {
@@ -178,6 +190,16 @@ const page = () => {
     { name: "Alojamiento", icon: <House size={24} /> },
     { name: "Excursiones", icon: <MapTrifold  size={24} /> },
   ];
+  if (loading) {
+    // Mostrar el loader mientras el estado `loading` sea true
+    return (
+      <div className="loader-container">
+        <Spinner animation="border" role="status" className="loader">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -218,9 +240,49 @@ const page = () => {
               <Row className="mtrow d-flex justify-content-center">
                 <div className="flex items-center justify-center min-h-screen p-4">
                 <Card className="card-package w-full max-w-3xl p-6 space-y-4  rounded-2xl">
+                <div className="d-flex flex-column flex-md-row align-items-start w-100">
+    
+                  {/* Contenedor de la Imagen con el botón */}
+                  <div className="col-12 col-md-8 position-relative">
                     <label htmlFor="imageUpload" className="package_image border-dashed border-2 p-10 d-flex justify-content-center align-items-center rounded-lg cursor-pointer">
-                      <img src={existingImages[0]} alt="Paquete" className="img-package img-fluid rounded-lg"  />
+                      <img 
+                        src={existingImages[0]} 
+                        alt="Paquete" 
+                        className="img-package img-fluid rounded-lg"
+                        onClick={() => !isOpen && setIsOpen(true)}
+                      />
+
+                    {/* Botón de Ver Fotos */}
+                    <button 
+                      className="btn-see-more btn btn-light position-absolute top-0 start-0 m-2" 
+                      onClick={() => !isOpen && setIsOpen(true)}
+                    >
+                      Ver Fotos
+                    </button>
                     </label>
+                  </div>
+
+                  {/* 🟦 Cuadrado al lado de la imagen */}
+                  <div className="col-12 col-md-4 box-contact info-box border border-primary rounded p-4 ms-4" style={{ width: "200px", height: "200px" }}>
+                    <h5 className="text-center text-primary title-contact-package">¡Consulta por este paquete!</h5>
+                    <p className="p-contact"><Phone className="contact-icon"  size={20}/>351 393-4673</p>
+                    <p className="p-contact"><EnvelopeSimple className="contact-icon" size={20}/>adriyornet@gmail.com</p>
+                    <p className="p-contact"><InstagramLogo className="contact-icon" size={20}/>@vayaturismo</p>
+                    <div className="d-flex justify-content-center">
+                      <button className="btn-contact-package">Consultar</button>
+                    </div>
+                  </div>
+                </div>
+
+                    {isOpen && (
+                      <Lightbox
+                      open={isOpen}
+                      close={() => setIsOpen(false)}
+                      slides={images}
+                      index={photoIndex}
+                      plugins={[Fullscreen, Thumbnails, Zoom]} // Opcional: Agrega zoom y miniaturas
+                    />
+                    )}
 
                     <h1 type="text" name='title' placeholder="Título del paquete" className="title-n1" >{formData.title}</h1>
                     <h1 type="text" name='title' placeholder="Título del paquete" className="title-n2" >{formData.destination} - {cantidadNoches} Noches</h1>

@@ -9,6 +9,8 @@ import "@/public/assets/vendor/boxicons/css/boxicons.min.css";
 import "@/public/assets/vendor/glightbox/css/glightbox.min.css";
 import "@/public/assets/vendor/remixicon/remixicon.css";
 import "@/public/assets/vendor/swiper/swiper-bundle.min.css";
+import './style.css';
+import {  Spinner  } from "react-bootstrap";
 
 import Swiper, { Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -23,6 +25,7 @@ const page = () => {
   const [isNavOpen, setIsNavOpen] = useState(false); // Estado del menú móvil
   const [packages, setPackages] = useState([]);
   const [fetchError, setFetchError] = useState(false);
+  const [loading, setLoading] = useState(true); // Estado para el loader
 
   const toggleNav = () => {
     console.log('gs')
@@ -47,7 +50,8 @@ const page = () => {
         setFetchError(true);
       }
     };
-  
+    setTimeout(() => setLoading(false), 1000);
+
     fetchPackages();
   }, []);
 
@@ -59,6 +63,16 @@ const page = () => {
       container.style.flexWrap = "wrap";
     }
   }, [packages]); // Se ejecuta cada vez que `packages` cambia
+  if (loading) {
+    // Mostrar el loader mientras el estado `loading` sea true
+    return (
+      <div className="loader-container">
+        <Spinner animation="border" role="status" className="loader">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
   return (
     <>
