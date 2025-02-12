@@ -368,7 +368,7 @@ const onChangeDestino = (_, { newValue }) => {
         return (
           <form className="custom-form" onSubmit={handleSubmit}>
             <div className="row mb-3">
-              <div className="col-md-6">
+              <div className="col-12 col-md-6">
                 <label htmlFor="name" className="form-label">
                   Nombre Completo
                 </label>
@@ -382,7 +382,7 @@ const onChangeDestino = (_, { newValue }) => {
                   required
                 />
               </div>
-              <div className="col-md-6">
+              <div className="col-12 col-md-6">
                 <label htmlFor="email" className="form-label">
                   Email o Teléfono
                 </label>
@@ -398,7 +398,7 @@ const onChangeDestino = (_, { newValue }) => {
               </div>
             </div>
             <div className="row mb-3">
-              <div className="col-md-4">
+              <div className="col-12 col-md-4">
               <label htmlFor="destino" className="form-label">
                   Destino
                 </label>
@@ -431,13 +431,13 @@ const onChangeDestino = (_, { newValue }) => {
                   placeholder="Ingrese el destino"
                 /> */}
               </div>
-              <div className="col-md-4">
+              <div className="col-12 col-md-4">
               <label htmlFor="personas" className="form-label">
             Cantidad de Personas
           </label>
               <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
               </div>
-              <div className="col-md-4">
+              <div className="col-12 col-md-4">
                 <label htmlFor="tipoAlojamiento" className="form-label">
                   Tipo de Alojamiento
                 </label>
@@ -478,7 +478,7 @@ const onChangeDestino = (_, { newValue }) => {
           return (
             <form className="custom-form" onSubmit={handleSubmit}>
               <div className="row mb-3">
-                <div className="col-md-5">
+                <div className="col-12 col-md-5">
                   <label htmlFor="nombreCompleto" className="form-label">
                     Nombre del Pasajero
                   </label>
@@ -491,7 +491,7 @@ const onChangeDestino = (_, { newValue }) => {
                     placeholder="Ingresa el nombre del pasajero"
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="email" className="form-label">
                     Email o Teléfono
                   </label>
@@ -504,7 +504,7 @@ const onChangeDestino = (_, { newValue }) => {
                     placeholder="Ingresa un email o teléfono"
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-12 col-md-3">
                   <label htmlFor="asistencia" className="form-label">
                     Asistencia al viajero
                   </label>
@@ -516,7 +516,7 @@ const onChangeDestino = (_, { newValue }) => {
                 </div>
               </div>
               <div className="row mb-3">
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="origen" className="form-label">
                     Origen
                   </label>
@@ -554,7 +554,7 @@ const onChangeDestino = (_, { newValue }) => {
                 </div>
 
                 </div>
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="destino" className="form-label">
                     Destino
                   </label>
@@ -595,19 +595,19 @@ const onChangeDestino = (_, { newValue }) => {
                 </div>
               </div>
               <div className="row mb-3">
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="personas" className="form-label">
                     Cantidad de Personas
                   </label>
                   <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
                   </div>
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="partida" className="form-label">
                     Partida
                   </label>
                   <input type="date" className="form-control cmpo" id="partida" onChange={handleChange} value={formData.partida || ""}/>
                 </div>
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="regreso" className="form-label">
                     Regreso
                   </label>
@@ -640,7 +640,7 @@ const onChangeDestino = (_, { newValue }) => {
           return (
             <form className="custom-form" onSubmit={handleSubmit}>
               <div className="row mb-3">
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="nombreCompleto" className="form-label">
                     Nombre del Pasajero
                   </label>
@@ -653,7 +653,7 @@ const onChangeDestino = (_, { newValue }) => {
                     placeholder="Ingresa el nombre del pasajero"
                   />
                 </div>
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="email" className="form-label">
                     Email o Teléfono
                   </label>
@@ -668,7 +668,7 @@ const onChangeDestino = (_, { newValue }) => {
                 </div>
               </div>
               <div className="row mb-3">
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="destino" className="form-label">
                     Destino
                   </label>
@@ -693,7 +693,7 @@ const onChangeDestino = (_, { newValue }) => {
                   )}
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="tipoAlojamiento" className="form-label">
                     Tipo de Alojamiento
                   </label>
@@ -705,19 +705,19 @@ const onChangeDestino = (_, { newValue }) => {
                 </div>
               </div>
               <div className="row mb-3">
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="personas" className="form-label">
                     Cantidad de Personas
                   </label>
                   <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
                   </div>
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="ingreso" className="form-label">
                     Ingreso
                   </label>
                   <input type="date" value={formData.ingreso || ""} className="form-control cmpo" id="ingreso" onChange={handleChange}/>
                 </div>
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="salida" className="form-label">
                     Salida
                   </label>
@@ -750,7 +750,7 @@ const onChangeDestino = (_, { newValue }) => {
           return (
             <form className="custom-form" onSubmit={handleSubmit}>
               <div className="row mb-3">
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="nombreCompleto" className="form-label">
                     Nombre Completo
                   </label>
@@ -763,7 +763,7 @@ const onChangeDestino = (_, { newValue }) => {
                     placeholder="Ingresa tu nombre completo"
                   />
                 </div>
-                <div className="col-md-6">
+                <div className="col-12 col-md-6">
                   <label htmlFor="email" className="form-label">
                     Email o Teléfono
                   </label>
@@ -778,7 +778,7 @@ const onChangeDestino = (_, { newValue }) => {
                 </div>
               </div>
               <div className="row mb-3">
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="destino" className="form-label">
                     Destino
                   </label>
@@ -803,13 +803,13 @@ const onChangeDestino = (_, { newValue }) => {
                     )}
                     </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="personas" className="form-label">
                     Cantidad de Personas
                   </label>
                   <PassengerDropdown adultos={adultos} setAdultos={setAdultos} niños={niños} setNiños={setNiños} mayores={mayores} setMayores={setMayores} discapacidad={discapacidad} setDiscapacidad={setDiscapacidad} />
                   </div>
-                <div className="col-md-4">
+                <div className="col-12 col-md-4">
                   <label htmlFor="tipoAlojamiento" className="form-label">
                     Tipo de Alojamiento
                   </label>
