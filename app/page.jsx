@@ -29,12 +29,14 @@ const page = () => {
       window.location.href = url;
     }
   };
-  
+
   const toggleNav = () => {
     console.log('gs')
     setIsNavOpen(!isNavOpen);
   };
   useEffect(() => {
+    import('bootstrap/dist/js/bootstrap.bundle.min.js');
+
     const fetchPackages = async () => {
       try {
         const response = await fetch("http://127.0.0.1:5000/packages");
