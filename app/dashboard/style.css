@@ -188,3 +188,9 @@ body{
         height: 50px;
     }    
 }
+
+@media (max-width: 768px) {
+  .row>* {
+      width: 100%;
+  }
+}
