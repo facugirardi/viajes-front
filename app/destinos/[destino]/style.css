@@ -196,7 +196,8 @@
 
 @media (max-width: 1199px) {
     .col-12 {
-      width: 100% !important;
-      max-width: 100% !important;
-    }
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+      }
 }
