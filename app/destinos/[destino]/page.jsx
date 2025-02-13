@@ -236,7 +236,6 @@ const page = () => {
       <main id="main">
       <div className="margin-destinos2"></div>
       <Container  className="container-main-package py-4">
-            <h5 className="dashboard-title">Dashboard <span className="mensajes-title">&gt; Paquetes</span></h5>
               <Row className="mtrow d-flex justify-content-center">
                 <div className="flex items-center justify-center min-h-screen p-4">
                 <Card className="card-package w-full max-w-3xl p-6 space-y-4  rounded-2xl">
@@ -269,7 +268,7 @@ const page = () => {
                     <p className="p-contact"><EnvelopeSimple className="contact-icon" size={20}/>adriyornet@gmail.com</p>
                     <p className="p-contact"><InstagramLogo className="contact-icon" size={20}/>@vayaturismo</p>
                     <div className="d-flex justify-content-center">
-                      <button className="btn-contact-package">Consultar</button>
+                      <button type='button' onClick={() => window.location.href = "https://vayaturismo.com/contacto"} className="btn-contact-package">Consultar</button>
                     </div>
                   </div>
                 </div>
