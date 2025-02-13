@@ -181,7 +181,7 @@ const Page = () => {
                     <Card className="package-card">
                       {/* Botón de eliminar */}
                       <button className=" delete-btn" onClick={() => handleShowDeleteModal(pack.id)}>
-                        <Trash weight="bold" />
+                        <Trash className="delete-icon" weight="bold" />
                       </button>
 
                       {/* Imagen del paquete */}
