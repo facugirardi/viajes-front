@@ -28,7 +28,7 @@ const Page = () => {
   useEffect(() => {
     const fetchMessage = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/messages/${messageId}`);
+        const response = await fetch(`https://api.vayaturismo.com/messages/${messageId}`);
         const data = await response.json();
         setMessage(data); // Guardamos el mensaje en el estado
       } catch (error) {
@@ -42,7 +42,7 @@ const Page = () => {
 
   const handleMarkAsRead = async () => {
     try {
-      const response = await axios.put(`http://127.0.0.1:5000/messages/${message?.id}/mark_as_read`);
+      const response = await axios.put(`https://api.vayaturismo.com/messages/${message?.id}/mark_as_read`);
       
       if (response.status === 200) {
         setMessage((prev) => ({ ...prev, leido: true })); // Actualiza el estado local

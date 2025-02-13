@@ -100,7 +100,7 @@ const page = () => {
   useEffect(() => {
     const fetchPackageData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/api/packages/${packageId}`);
+        const response = await fetch(`https://api.vayaturismo.com/api/packages/${packageId}`);
         if (!response.ok) throw new Error("Error al obtener el paquete");
   
         const data = await response.json();
@@ -146,7 +146,7 @@ const page = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/packages");
+        const response = await fetch("https://api.vayaturismo.com/packages");
         const data = await response.json();
   
         if (response.ok) {

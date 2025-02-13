@@ -39,7 +39,7 @@ const Page = () => {
     }, 400);
     const fetchPackages = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/packages");
+        const response = await fetch("https://api.vayaturismo.com/packages");
         const data = await response.json();
 
         if (response.ok) {
@@ -66,7 +66,7 @@ const Page = () => {
     if (!packageToDelete) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/delete_package/${packageToDelete}`, {
+      const response = await fetch(`https://api.vayaturismo.com/api/delete_package/${packageToDelete}`, {
         method: "DELETE",
       });
 
@@ -164,7 +164,7 @@ const Page = () => {
             </div>
             <div className="col-md-2 d-flex justify-content-center">
             <button className="text-center btn btn-primary btn-read" 
-            onClick={() => window.location.href = `http://localhost:3000/create-package`}
+            onClick={() => window.location.href = `https://vayaturismo.com/create-package`}
             >Crear Paquete
             </button>
             </div>
@@ -189,7 +189,7 @@ const Page = () => {
                         variant="top"
                         src={pack.images?.[0] || "/assets/images/places/image.png"}
                         className="package-image"
-                        onClick={() => window.location.href = `http://localhost:3000/edit-package/${pack.id}`}
+                        onClick={() => window.location.href = `https://vayaturismo.com/edit-package/${pack.id}`}
                       />
 
                       {/* Nombre del paquete en hover */}

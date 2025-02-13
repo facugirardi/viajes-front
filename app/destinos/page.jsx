@@ -29,7 +29,7 @@ const page = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/packages");
+        const response = await fetch("https://api.vayaturismo.com/packages");
         const data = await response.json();
   
         if (response.ok) {
