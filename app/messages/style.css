@@ -124,3 +124,8 @@ body{
 .leido:hover{
     background-color: #d0d0d02b !important;
 }
+@media (max-width: 768px) {
+    .row>* {
+        width: 100%;
+    }
+}
