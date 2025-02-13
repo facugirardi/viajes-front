@@ -181,7 +181,7 @@ const Page = () => {
                     <Card className="package-card">
                       {/* Botón de eliminar */}
                       <button className="d-flex justify-content-center align-items-center delete-btn" onClick={() => handleShowDeleteModal(pack.id)}>
-                        <Trash weight="bold" />
+                        <Trash size={24} weight="bold" />
                       </button>
 
                       {/* Imagen del paquete */}
