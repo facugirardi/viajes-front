@@ -180,7 +180,7 @@ const Page = () => {
                   <Col key={pack.id} md={3} sm={6} xs={12} className="mb-4">
                     <Card className="package-card">
                       {/* Botón de eliminar */}
-                      <button className="delete-btn" onClick={() => handleShowDeleteModal(pack.id)}>
+                      <button className="d-flex justify-content-center align-items-center delete-btn" onClick={() => handleShowDeleteModal(pack.id)}>
                         <Trash weight="bold" />
                       </button>
 
