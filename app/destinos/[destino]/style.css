@@ -151,7 +151,14 @@
     margin-top: 30px;
 }
 
-
+@media (max-width: 1199px) {
+    .col-12 {
+        width: 100% !important;
+        min-width: 100% !important;
+        flex-basis: 100% !important;
+        max-width: 100% !important;
+      }
+}
 @media (max-width: 1200px) {
     .box-contact{
         width: 40% !important;
@@ -198,6 +205,6 @@
     .col-12 {
         width: 100% !important;
         max-width: 100% !important;
-        flex: 0 0 100% !important;
+        flex: 0 0 auto !important;
       }
 }
