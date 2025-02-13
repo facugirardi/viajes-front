@@ -193,3 +193,10 @@
         display: none;
     }
 }
+
+@media (max-width: 1199px) {
+    .col-12 {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+}
